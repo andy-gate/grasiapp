@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Inter_Tight, Geist_Mono } from "next/font/google";
-import { TooltipProvider } from "@/components/ui/tooltip";
+import { Plus_Jakarta_Sans, Geist_Mono } from "next/font/google";
+import { BRAND } from "@/components/marketing/brand-logo";
 import "./globals.css";
 
-const interTight = Inter_Tight({
-  variable: "--font-inter-tight",
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta",
   subsets: ["latin"],
   display: "swap",
 });
@@ -15,8 +15,28 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GrasiApp",
-  description: "Company profile — IT, Charity, Translator",
+  title: {
+    default: BRAND.name,
+    template: `%s | ${BRAND.name}`,
+  },
+  description:
+    "Software development & digital solutions — IT, Charity, Translator",
+  icons: {
+    icon: [{ url: "/favicon.ico", sizes: "any" }],
+    shortcut: "/favicon.ico",
+    apple: "/favicon.ico",
+  },
+  openGraph: {
+    title: BRAND.name,
+    description:
+      "Software development & digital solutions — IT, Charity, Translator",
+    images: [
+      {
+        url: BRAND.logoOnLight,
+        alt: BRAND.name,
+      },
+    ],
+  },
 };
 
 export default function RootLayout({
@@ -27,7 +47,7 @@ export default function RootLayout({
   return (
     <html
       lang="id"
-      className={`${interTight.variable} ${geistMono.variable} h-full`}
+      className={`${plusJakartaSans.variable} ${geistMono.variable} h-full`}
     >
       <body className="min-h-full font-sans antialiased">{children}</body>
     </html>

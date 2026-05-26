@@ -13,6 +13,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { BrandLogo } from "@/components/marketing/brand-logo";
 
 export function LoginForm({
   title = "Admin GrasiApp",
@@ -45,7 +46,8 @@ export function LoginForm({
   }
 
   return (
-    <div className="flex min-h-[60vh] items-center justify-center px-4 py-12">
+    <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 py-12">
+      <BrandLogo size="lg" className="mb-8" />
       <Card className="w-full max-w-md border-white/10 bg-[#0d1117]/80 text-white backdrop-blur-xl">
         <CardHeader>
           <CardTitle className="text-white">{title}</CardTitle>

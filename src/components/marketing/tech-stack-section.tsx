@@ -1,20 +1,19 @@
 import { getTranslations } from "next-intl/server";
 import { SectionHeading } from "./section-heading";
 import { Layers } from "lucide-react";
+import { prisma } from "@/lib/db";
+import { pickLocaleField } from "@/lib/content";
+import type { Locale } from "@/i18n/routing";
 
-const STACK = [
-  "Next.js",
-  "React",
-  "TypeScript",
-  "PostgreSQL",
-  "Node.js",
-  "Cloud",
-  "Docker",
-  "API / REST",
-];
-
-export async function TechStackSection() {
+export async function TechStackSection({ locale }: { locale: Locale }) {
   const t = await getTranslations("home");
+
+  const items = await prisma.techStackItem.findMany({
+    where: { isActive: true },
+    orderBy: { sortOrder: "asc" },
+  });
+
+  if (items.length === 0) return null;
 
   return (
     <section className="border-b border-white/5 px-4 py-16">
@@ -26,12 +25,12 @@ export async function TechStackSection() {
           icon={Layers}
         />
         <div className="mt-10 flex flex-wrap justify-center gap-3">
-          {STACK.map((tech) => (
+          {items.map((item) => (
             <span
-              key={tech}
+              key={item.id}
               className="rounded-lg border border-white/10 bg-white/5 px-4 py-2 font-mono text-sm text-slate-300 backdrop-blur transition-colors hover:border-brand-blue/40 hover:text-brand-blue-light"
             >
-              {tech}
+              {pickLocaleField(item, "name", locale)}
             </span>
           ))}
         </div>

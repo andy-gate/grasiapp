@@ -13,8 +13,10 @@ import {
   Link2,
   Mail,
   UserCircle,
+  Layers,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { BrandLogo } from "@/components/marketing/brand-logo";
 
 type NavItem = {
   href: string;
@@ -36,6 +38,12 @@ const navItems: NavItem[] = [
     label: "Proyek IT",
     icon: FolderCode,
     permission: "it_project.manage",
+  },
+  {
+    href: "/admin/tech-stack",
+    label: "Tech Stack",
+    icon: Layers,
+    permission: "tech_stack.manage",
   },
   {
     href: "/admin/charity",
@@ -98,8 +106,13 @@ export function AdminSidebar({
 
   return (
     <aside className="flex w-56 flex-col border-r bg-muted/20">
-      <div className="flex h-16 items-center border-b px-4 font-semibold">
-        GrasiApp Admin
+      <div className="flex h-16 items-center border-b px-4">
+        <BrandLogo
+          variant="onLight"
+          size="sm"
+          href="/admin"
+          link="next"
+        />
       </div>
       <nav className="flex flex-1 flex-col gap-1 p-3">
         {navItems.filter(canSee).map((item) => {

@@ -19,7 +19,7 @@ export default async function HomePage({
   return (
     <>
       <HeroSection />
-      <TechStackSection />
+      <TechStackSection locale={loc} />
       <ProcessSection />
       <FeaturedSection locale={loc} />
       <DivisionsSection />

@@ -148,6 +148,19 @@ model ItCategory {
   @@index([isActive, sortOrder])
 }
 
+model TechStackItem {
+  id        String   @id @default(cuid())
+  slug      String   @unique
+  nameId    String
+  nameEn    String
+  sortOrder Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isActive, sortOrder])
+}
+
 model ItProject {
   id            String        @id @default(cuid())
   slug          String        @unique

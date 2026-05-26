@@ -11,6 +11,7 @@ const prisma = new PrismaClient({ adapter });
 const PERMISSIONS = [
   { slug: "user.manage", name: "Kelola user & role" },
   { slug: "it_category.manage", name: "Kelola kategori IT" },
+  { slug: "tech_stack.manage", name: "Kelola tech stack landing" },
   { slug: "it_project.manage", name: "Kelola proyek IT" },
   { slug: "charity.manage", name: "Kelola charity" },
   { slug: "translator.manage", name: "Kelola layanan translator" },
@@ -38,6 +39,7 @@ const ROLES: Record<
     name: "Editor",
     permissions: [
       "it_category.manage",
+      "tech_stack.manage",
       "it_project.manage",
       "charity.manage",
       "translator.manage",
@@ -143,6 +145,26 @@ async function main() {
       create: { ...c, sortOrder: i },
     });
     catRecords.push(record);
+  }
+
+  const techStackItems = [
+    { slug: "nextjs", nameId: "Next.js", nameEn: "Next.js" },
+    { slug: "react", nameId: "React", nameEn: "React" },
+    { slug: "typescript", nameId: "TypeScript", nameEn: "TypeScript" },
+    { slug: "postgresql", nameId: "PostgreSQL", nameEn: "PostgreSQL" },
+    { slug: "nodejs", nameId: "Node.js", nameEn: "Node.js" },
+    { slug: "cloud", nameId: "Cloud", nameEn: "Cloud" },
+    { slug: "docker", nameId: "Docker", nameEn: "Docker" },
+    { slug: "api-rest", nameId: "API / REST", nameEn: "API / REST" },
+  ];
+
+  for (let i = 0; i < techStackItems.length; i++) {
+    const item = techStackItems[i];
+    await prisma.techStackItem.upsert({
+      where: { slug: item.slug },
+      update: { ...item, sortOrder: i, isActive: true },
+      create: { ...item, sortOrder: i, isActive: true },
+    });
   }
 
   await prisma.itProject.upsert({
