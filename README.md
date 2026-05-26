@@ -48,7 +48,7 @@ npm run dev
 - Situs: http://localhost:3000/id
 - Login admin: http://localhost:3000/id/login (alias: `/login`, `/en/login`)
 
-**Login seed:** `admin@grasiapp.local` / `admin123`
+**Login seed:** `admin` atau `admin@grasiapp.local` / `admin123`
 
 ## Scripts
 

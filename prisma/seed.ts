@@ -12,6 +12,7 @@ const PERMISSIONS = [
   { slug: "user.manage", name: "Kelola user & role" },
   { slug: "it_category.manage", name: "Kelola kategori IT" },
   { slug: "tech_stack.manage", name: "Kelola tech stack landing" },
+  { slug: "client.manage", name: "Kelola daftar klien" },
   { slug: "it_project.manage", name: "Kelola proyek IT" },
   { slug: "charity.manage", name: "Kelola charity" },
   { slug: "translator.manage", name: "Kelola layanan translator" },
@@ -40,6 +41,7 @@ const ROLES: Record<
     permissions: [
       "it_category.manage",
       "tech_stack.manage",
+      "client.manage",
       "it_project.manage",
       "charity.manage",
       "translator.manage",
@@ -90,9 +92,10 @@ async function main() {
   const passwordHash = await bcrypt.hash("admin123", 12);
   const admin = await prisma.user.upsert({
     where: { email: "admin@grasiapp.local" },
-    update: { passwordHash, name: "Super Admin", isActive: true },
+    update: { passwordHash, name: "Super Admin", username: "admin", isActive: true },
     create: {
       email: "admin@grasiapp.local",
+      username: "admin",
       name: "Super Admin",
       passwordHash,
       isActive: true,
@@ -164,6 +167,24 @@ async function main() {
       where: { slug: item.slug },
       update: { ...item, sortOrder: i, isActive: true },
       create: { ...item, sortOrder: i, isActive: true },
+    });
+  }
+
+  const clients = [
+    { slug: "klien-a", nameId: "Klien A", nameEn: "Client A" },
+    { slug: "klien-b", nameId: "Klien B", nameEn: "Client B" },
+    { slug: "klien-c", nameId: "Klien C", nameEn: "Client C" },
+    { slug: "klien-d", nameId: "Klien D", nameEn: "Client D" },
+    { slug: "klien-e", nameId: "Klien E", nameEn: "Client E" },
+    { slug: "klien-f", nameId: "Klien F", nameEn: "Client F" },
+  ];
+
+  for (let i = 0; i < clients.length; i++) {
+    const client = clients[i];
+    await prisma.client.upsert({
+      where: { slug: client.slug },
+      update: { ...client, sortOrder: i, isActive: true },
+      create: { ...client, sortOrder: i, isActive: true },
     });
   }
 
@@ -284,7 +305,7 @@ async function main() {
   });
 
   console.log("Seed selesai.");
-  console.log("Login admin: admin@grasiapp.local / admin123");
+  console.log("Login admin: admin / admin@grasiapp.local — password: admin123");
 }
 
 main()

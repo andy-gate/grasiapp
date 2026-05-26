@@ -7,9 +7,18 @@ import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/db";
 import { requirePermission } from "@/lib/admin-auth";
 import { fail, type ActionResult } from "@/lib/action-result";
+import { isValidUsername, normalizeUsername } from "@/lib/username";
+
+const usernameSchema = z
+  .string()
+  .min(3, "Username minimal 3 karakter")
+  .max(32, "Username maksimal 32 karakter")
+  .transform(normalizeUsername)
+  .refine(isValidUsername, "Username hanya huruf kecil, angka, dan underscore");
 
 const createSchema = z.object({
   email: z.string().email(),
+  username: usernameSchema,
   name: z.string().min(2),
   password: z.string().min(6),
   isActive: z.boolean(),
@@ -18,6 +27,7 @@ const createSchema = z.object({
 
 const updateSchema = z.object({
   email: z.string().email(),
+  username: usernameSchema,
   name: z.string().min(2),
   password: z.string().optional(),
   isActive: z.boolean(),
@@ -36,6 +46,7 @@ export async function createUser(
   try {
     const data = createSchema.parse({
       email: String(formData.get("email") ?? "").trim(),
+      username: String(formData.get("username") ?? "").trim(),
       name: String(formData.get("name") ?? "").trim(),
       password: String(formData.get("password") ?? ""),
       isActive: formData.get("isActive") === "on",
@@ -45,6 +56,7 @@ export async function createUser(
     const user = await prisma.user.create({
       data: {
         email: data.email,
+        username: data.username,
         name: data.name,
         passwordHash,
         isActive: data.isActive,
@@ -71,6 +83,7 @@ export async function updateUser(
   try {
     const data = updateSchema.parse({
       email: String(formData.get("email") ?? "").trim(),
+      username: String(formData.get("username") ?? "").trim(),
       name: String(formData.get("name") ?? "").trim(),
       password: String(formData.get("password") ?? "").trim() || undefined,
       isActive: formData.get("isActive") === "on",
@@ -83,6 +96,7 @@ export async function updateUser(
       where: { id },
       data: {
         email: data.email,
+        username: data.username,
         name: data.name,
         isActive: data.isActive,
         ...(passwordHash ? { passwordHash } : {}),

@@ -25,10 +25,11 @@ export default async function AdminUsersPage() {
       />
       <div className="mt-6">
         <AdminDataTable
-          columns={["Email", "Nama", "Role", "Bio", "Aksi"]}
+          columns={["Username", "Email", "Nama", "Role", "Bio", "Aksi"]}
           rows={users.map((u) => ({
             id: u.id,
             cells: [
+              u.username,
               u.email,
               u.name,
               u.roles.map((r) => r.role.slug).join(", ") || "-",
@@ -37,7 +38,7 @@ export default async function AdminUsersPage() {
                 key="a"
                 editHref={`/admin/users/${u.id}/edit`}
                 deleteTitle="Hapus user?"
-                deleteDescription={`Akun ${u.email} akan dihapus.`}
+                deleteDescription={`Akun ${u.username} (${u.email}) akan dihapus.`}
                 onDelete={deleteUser.bind(null, u.id)}
               />,
             ],

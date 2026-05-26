@@ -3,18 +3,21 @@ import Credentials from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/db";
 import { getUserPermissions } from "@/lib/permissions";
+import { findUserByLoginIdentifier } from "@/lib/username";
 
 declare module "next-auth" {
   interface Session {
     user: {
       id: string;
       email: string;
+      username: string;
       name: string;
       permissions: string[];
     };
   }
 
   interface User {
+    username?: string;
     permissions?: string[];
   }
 }
@@ -22,6 +25,7 @@ declare module "next-auth" {
 declare module "@auth/core/jwt" {
   interface JWT {
     id: string;
+    username: string;
     permissions: string[];
   }
 }
@@ -36,15 +40,15 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     Credentials({
       name: "credentials",
       credentials: {
-        email: { label: "Email", type: "email" },
+        identifier: { label: "Email atau username", type: "text" },
         password: { label: "Password", type: "password" },
       },
       async authorize(credentials) {
-        const email = credentials?.email as string | undefined;
+        const identifier = credentials?.identifier as string | undefined;
         const password = credentials?.password as string | undefined;
-        if (!email || !password) return null;
+        if (!identifier || !password) return null;
 
-        const user = await prisma.user.findUnique({ where: { email } });
+        const user = await findUserByLoginIdentifier(identifier);
         if (!user?.passwordHash || !user.isActive) return null;
 
         const valid = await bcrypt.compare(password, user.passwordHash);
@@ -60,6 +64,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return {
           id: user.id,
           email: user.email,
+          username: user.username,
           name: user.name,
           permissions: Array.from(permissions),
         };
@@ -70,6 +75,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id!;
+        token.username = user.username ?? "";
         token.permissions = user.permissions ?? [];
       }
       return token;
@@ -77,6 +83,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
+        session.user.username = (token.username as string) ?? "";
         session.user.permissions = (token.permissions as string[]) ?? [];
       }
       return session;

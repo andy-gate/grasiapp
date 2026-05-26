@@ -25,6 +25,13 @@ export function UserForm({
         defaultValue={user?.email}
         required
       />
+      <FormField
+        label="Username"
+        name="username"
+        defaultValue={user?.username}
+        hint="3–32 karakter: huruf kecil, angka, underscore"
+        required
+      />
       <FormField label="Nama" name="name" defaultValue={user?.name} required />
       <FormField
         label={user ? "Password baru (opsional)" : "Password"}

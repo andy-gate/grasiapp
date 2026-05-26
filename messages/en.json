@@ -1,7 +1,12 @@
 {
   "login": {
     "title": "Sign in — GrasiApp",
-    "description": "Admin login to manage site content"
+    "description": "Admin login to manage site content",
+    "identifier": "Email or username",
+    "password": "Password",
+    "submit": "Sign in",
+    "loading": "Loading...",
+    "error": "Invalid email/username or password."
   },
   "nav": {
     "home": "Home",
@@ -24,6 +29,9 @@
     "stackBadge": "Tech Stack",
     "stackTitle": "Technologies we master",
     "stackDesc": "Modern stack for fast, secure, and maintainable applications.",
+    "clientsBadge": "Our Clients",
+    "clientsTitle": "Trusted by organizations",
+    "clientsDesc": "A selection of clients and partners we have worked with.",
     "processBadge": "Process",
     "processTitle": "From idea to production",
     "processDesc": "Structured and transparent software development methodology.",

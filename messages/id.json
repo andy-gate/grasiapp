@@ -1,7 +1,12 @@
 {
   "login": {
     "title": "Masuk — GrasiApp",
-    "description": "Login admin untuk mengelola konten situs"
+    "description": "Login admin untuk mengelola konten situs",
+    "identifier": "Email atau username",
+    "password": "Password",
+    "submit": "Masuk",
+    "loading": "Memuat...",
+    "error": "Email/username atau password salah."
   },
   "nav": {
     "home": "Beranda",
@@ -24,6 +29,9 @@
     "stackBadge": "Tech Stack",
     "stackTitle": "Teknologi yang kami kuasai",
     "stackDesc": "Stack modern untuk aplikasi yang cepat, aman, dan mudah dirawat.",
+    "clientsBadge": "Klien Kami",
+    "clientsTitle": "Dipercaya oleh berbagai organisasi",
+    "clientsDesc": "Beberapa klien dan partner yang pernah bekerja sama dengan kami.",
     "processBadge": "Proses",
     "processTitle": "Dari ide ke production",
     "processDesc": "Metodologi pengembangan software yang terstruktur dan transparan.",

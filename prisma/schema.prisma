@@ -22,6 +22,7 @@ enum BackgroundType {
 model User {
   id            String    @id @default(cuid())
   email         String    @unique
+  username      String    @unique
   emailVerified DateTime?
   name          String
   passwordHash  String?
@@ -157,6 +158,21 @@ model TechStackItem {
   isActive  Boolean  @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  @@index([isActive, sortOrder])
+}
+
+model Client {
+  id         String   @id @default(cuid())
+  slug       String   @unique
+  nameId     String
+  nameEn     String
+  logoUrl    String?
+  websiteUrl String?
+  sortOrder  Int      @default(0)
+  isActive   Boolean  @default(true)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   @@index([isActive, sortOrder])
 }

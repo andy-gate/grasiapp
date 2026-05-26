@@ -1,6 +1,7 @@
 import { setRequestLocale } from "next-intl/server";
 import { HeroSection } from "@/components/marketing/hero-section";
 import { TechStackSection } from "@/components/marketing/tech-stack-section";
+import { ClientsSection } from "@/components/marketing/clients-section";
 import { ProcessSection } from "@/components/marketing/process-section";
 import { FeaturedSection } from "@/components/marketing/featured-section";
 import { DivisionsSection } from "@/components/marketing/divisions-section";
@@ -20,6 +21,7 @@ export default async function HomePage({
     <>
       <HeroSection />
       <TechStackSection locale={loc} />
+      <ClientsSection locale={loc} />
       <ProcessSection />
       <FeaturedSection locale={loc} />
       <DivisionsSection />

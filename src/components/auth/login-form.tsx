@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -16,12 +17,13 @@ import {
 import { BrandLogo } from "@/components/marketing/brand-logo";
 
 export function LoginForm({
-  title = "Admin GrasiApp",
-  description = "Masuk ke panel administrasi",
+  title,
+  description,
 }: {
   title?: string;
   description?: string;
 }) {
+  const t = useTranslations("login");
   const router = useRouter();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -32,13 +34,13 @@ export function LoginForm({
     setError("");
     const form = new FormData(e.currentTarget);
     const res = await signIn("credentials", {
-      email: form.get("email"),
+      identifier: form.get("identifier"),
       password: form.get("password"),
       redirect: false,
     });
     setLoading(false);
     if (res?.error) {
-      setError("Email atau password salah.");
+      setError(t("error"));
       return;
     }
     router.push("/admin");
@@ -50,29 +52,31 @@ export function LoginForm({
       <BrandLogo size="lg" className="mb-8" />
       <Card className="w-full max-w-md border-white/10 bg-[#0d1117]/80 text-white backdrop-blur-xl">
         <CardHeader>
-          <CardTitle className="text-white">{title}</CardTitle>
+          <CardTitle className="text-white">{title ?? t("title")}</CardTitle>
           <CardDescription className="text-slate-400">
-            {description}
+            {description ?? t("description")}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={onSubmit} className="space-y-4">
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="identifier">{t("identifier")}</Label>
               <Input
-                id="email"
-                name="email"
-                type="email"
-                defaultValue="admin@grasiapp.local"
+                id="identifier"
+                name="identifier"
+                type="text"
+                autoComplete="username"
+                defaultValue="admin"
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{t("password")}</Label>
               <Input
                 id="password"
                 name="password"
                 type="password"
+                autoComplete="current-password"
                 required
               />
             </div>
@@ -84,7 +88,7 @@ export function LoginForm({
               className="w-full border-0 bg-gradient-to-r from-brand-indigo to-brand-blue shadow-lg shadow-brand-blue/25 hover:opacity-90"
               disabled={loading}
             >
-              {loading ? "Memuat..." : "Masuk"}
+              {loading ? t("loading") : t("submit")}
             </Button>
           </form>
         </CardContent>

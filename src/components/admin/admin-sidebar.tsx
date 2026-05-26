@@ -14,6 +14,7 @@ import {
   Mail,
   UserCircle,
   Layers,
+  Building2,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { BrandLogo } from "@/components/marketing/brand-logo";
@@ -44,6 +45,12 @@ const navItems: NavItem[] = [
     label: "Tech Stack",
     icon: Layers,
     permission: "tech_stack.manage",
+  },
+  {
+    href: "/admin/clients",
+    label: "Klien",
+    icon: Building2,
+    permission: "client.manage",
   },
   {
     href: "/admin/charity",

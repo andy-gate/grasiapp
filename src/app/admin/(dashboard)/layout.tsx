@@ -17,7 +17,7 @@ export default async function AdminDashboardLayout({
       <div className="flex flex-1 flex-col">
         <header className="flex h-16 items-center justify-between border-b px-6">
           <p className="text-sm text-muted-foreground">
-            {session.user.name} ({session.user.email})
+            {session.user.name} (@{session.user.username})
           </p>
           <SignOutButton />
         </header>
