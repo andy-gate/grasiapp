@@ -1,0 +1,96 @@
+{
+  "login": {
+    "title": "Masuk — GrasiApp",
+    "description": "Login admin untuk mengelola konten situs"
+  },
+  "nav": {
+    "home": "Beranda",
+    "about": "Tentang",
+    "it": "Software",
+    "charity": "Charity",
+    "translator": "Translator",
+    "contact": "Kontak",
+    "admin": "Admin",
+    "login": "Masuk"
+  },
+  "home": {
+    "heroBadge": "Software Engineering Studio",
+    "heroTitle": "Membangun software yang skalabel & modern",
+    "heroSubtitle": "Grasia Prima Perfekta — partner pengembangan aplikasi web, mobile, dan sistem integrasi dari ide hingga production.",
+    "ctaPrimary": "Diskusikan Proyek",
+    "ctaIt": "Lihat Portfolio",
+    "ctaCharity": "Program Charity",
+    "ctaTranslator": "Layanan Translator",
+    "stackBadge": "Tech Stack",
+    "stackTitle": "Teknologi yang kami kuasai",
+    "stackDesc": "Stack modern untuk aplikasi yang cepat, aman, dan mudah dirawat.",
+    "processBadge": "Proses",
+    "processTitle": "Dari ide ke production",
+    "processDesc": "Metodologi pengembangan software yang terstruktur dan transparan.",
+    "process": {
+      "discover": {
+        "title": "Discover",
+        "desc": "Analisis kebutuhan bisnis & spesifikasi teknis"
+      },
+      "design": {
+        "title": "Design",
+        "desc": "Arsitektur sistem, UI/UX, dan roadmap"
+      },
+      "build": {
+        "title": "Build",
+        "desc": "Development iteratif dengan best practices"
+      },
+      "deploy": {
+        "title": "Deploy",
+        "desc": "Go-live ke cloud atau server Anda"
+      },
+      "maintain": {
+        "title": "Maintain",
+        "desc": "Support, monitoring, dan pengembangan lanjut"
+      }
+    },
+    "portfolioBadge": "Portfolio",
+    "portfolioTitle": "Proyek software unggulan",
+    "portfolioDesc": "Contoh solusi yang telah kami bangun untuk klien.",
+    "divisionsBadge": "Ekosistem GrasiApp",
+    "divisionsTitle": "Lebih dari sekadar software",
+    "divisionsDesc": "Selain pengembangan software, kami juga menjalankan program charity dan layanan translator.",
+    "divisionItDesc": "Fokus utama — custom software, web app, mobile, dan integrasi sistem.",
+    "divisionCharityDesc": "Program sosial dan kampanye yang kami dukung.",
+    "divisionTranslatorDesc": "Layanan penerjemahan profesional untuk dokumen dan bisnis.",
+    "ctaTitle": "Siap membangun software untuk bisnis Anda?",
+    "ctaDesc": "Ceritakan kebutuhan proyek Anda — tim kami siap membantu dari konsultasi hingga deployment.",
+    "title": "Selamat datang di GrasiApp",
+    "subtitle": "Solusi IT, program charity, dan layanan penerjemahan profesional."
+  },
+  "common": {
+    "readMore": "Selengkapnya",
+    "all": "Semua",
+    "contactUs": "Hubungi Kami",
+    "send": "Kirim",
+    "featured": "Unggulan"
+  },
+  "contact": {
+    "title": "Hubungi Kami",
+    "subtitle": "Silakan hubungi kami melalui email atau WhatsApp, atau kirim pesan melalui formulir di bawah.",
+    "formTitle": "Kirim Pesan",
+    "whatsapp": "WhatsApp",
+    "name": "Nama",
+    "email": "Email",
+    "phone": "Telepon",
+    "message": "Pesan",
+    "success": "Pesan berhasil dikirim. Terima kasih!"
+  },
+  "it": {
+    "title": "Proyek Software",
+    "empty": "Belum ada proyek."
+  },
+  "charity": {
+    "title": "Charity",
+    "empty": "Belum ada program."
+  },
+  "translator": {
+    "title": "Layanan Translator",
+    "empty": "Belum ada layanan."
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "login": {
+    "title": "Sign in — GrasiApp",
+    "description": "Admin login to manage site content"
+  },
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "it": "Software",
+    "charity": "Charity",
+    "translator": "Translator",
+    "contact": "Contact",
+    "admin": "Admin",
+    "login": "Sign in"
+  },
+  "home": {
+    "heroBadge": "Software Engineering Studio",
+    "heroTitle": "Building scalable, modern software",
+    "heroSubtitle": "Grasia Prima Perfekta — your partner for web apps, mobile, and system integration from idea to production.",
+    "ctaPrimary": "Discuss Your Project",
+    "ctaIt": "View Portfolio",
+    "ctaCharity": "Charity Programs",
+    "ctaTranslator": "Translation Services",
+    "stackBadge": "Tech Stack",
+    "stackTitle": "Technologies we master",
+    "stackDesc": "Modern stack for fast, secure, and maintainable applications.",
+    "processBadge": "Process",
+    "processTitle": "From idea to production",
+    "processDesc": "Structured and transparent software development methodology.",
+    "process": {
+      "discover": {
+        "title": "Discover",
+        "desc": "Business needs analysis & technical specs"
+      },
+      "design": {
+        "title": "Design",
+        "desc": "System architecture, UI/UX, and roadmap"
+      },
+      "build": {
+        "title": "Build",
+        "desc": "Iterative development with best practices"
+      },
+      "deploy": {
+        "title": "Deploy",
+        "desc": "Go-live to cloud or your server"
+      },
+      "maintain": {
+        "title": "Maintain",
+        "desc": "Support, monitoring, and evolution"
+      }
+    },
+    "portfolioBadge": "Portfolio",
+    "portfolioTitle": "Featured software projects",
+    "portfolioDesc": "Examples of solutions we've built for clients.",
+    "divisionsBadge": "GrasiApp Ecosystem",
+    "divisionsTitle": "More than software",
+    "divisionsDesc": "Beyond software development, we run charity programs and translation services.",
+    "divisionItDesc": "Core focus — custom software, web apps, mobile, and system integration.",
+    "divisionCharityDesc": "Social programs and campaigns we support.",
+    "divisionTranslatorDesc": "Professional translation for documents and business.",
+    "ctaTitle": "Ready to build software for your business?",
+    "ctaDesc": "Tell us about your project — our team helps from consultation to deployment.",
+    "title": "Welcome to GrasiApp",
+    "subtitle": "IT solutions, charity programs, and professional translation services."
+  },
+  "common": {
+    "readMore": "Read more",
+    "all": "All",
+    "contactUs": "Contact us",
+    "send": "Send",
+    "featured": "Featured"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Reach us via email or WhatsApp, or send a message using the form below.",
+    "formTitle": "Send a Message",
+    "whatsapp": "WhatsApp",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "message": "Message",
+    "success": "Message sent successfully. Thank you!"
+  },
+  "it": {
+    "title": "Software Projects",
+    "empty": "No projects yet."
+  },
+  "charity": {
+    "title": "Charity",
+    "empty": "No programs yet."
+  },
+  "translator": {
+    "title": "Translation Services",
+    "empty": "No services yet."
+  }
+}

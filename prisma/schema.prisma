@@ -1,0 +1,335 @@
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum PublishStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+enum BackgroundType {
+  COLOR
+  GRADIENT
+  IMAGE
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  emailVerified DateTime?
+  name          String
+  passwordHash  String?
+  image         String?
+  isActive      Boolean   @default(true)
+  lastLoginAt   DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  accounts            Account[]
+  sessions            Session[]
+  roles               UserRole[]
+  itProjects          ItProject[]
+  charityProjects     CharityProject[]
+  translatorServices  TranslatorService[]
+  pagesUpdated        Page[]           @relation("PageUpdatedBy")
+  mediaUploaded       Media[]
+  bioPage             BioPage?
+  contactMessagesRead ContactMessage[] @relation("ContactReadBy")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Role {
+  id          String           @id @default(cuid())
+  slug        String           @unique
+  name        String
+  description String?
+  users       UserRole[]
+  permissions RolePermission[]
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+}
+
+model Permission {
+  id          String           @id @default(cuid())
+  slug        String           @unique
+  name        String
+  description String?
+  roles       RolePermission[]
+}
+
+model UserRole {
+  userId String
+  roleId String
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  role   Role @relation(fields: [roleId], references: [id], onDelete: Cascade)
+
+  @@id([userId, roleId])
+}
+
+model RolePermission {
+  roleId       String
+  permissionId String
+  role         Role       @relation(fields: [roleId], references: [id], onDelete: Cascade)
+  permission   Permission @relation(fields: [permissionId], references: [id], onDelete: Cascade)
+
+  @@id([roleId, permissionId])
+}
+
+model Media {
+  id           String   @id @default(cuid())
+  filename     String
+  url          String
+  mimeType     String
+  size         Int
+  altId        String?
+  altEn        String?
+  uploadedById String?
+  uploadedBy   User?    @relation(fields: [uploadedById], references: [id], onDelete: SetNull)
+  createdAt    DateTime @default(now())
+
+  itProjectCovers       ItProject[]         @relation("ItCover")
+  charityProjectCovers  CharityProject[]    @relation("CharityCover")
+  translatorServiceIcons TranslatorService[] @relation("TranslatorIcon")
+  bioAvatars            BioPage[]           @relation("BioAvatar")
+  bioBackgrounds        BioPage[]           @relation("BioBackground")
+}
+
+model ItCategory {
+  id            String      @id @default(cuid())
+  slug          String      @unique
+  nameId        String
+  nameEn        String
+  descriptionId String?     @db.Text
+  descriptionEn String?     @db.Text
+  sortOrder     Int         @default(0)
+  isActive      Boolean     @default(true)
+  projects      ItProject[]
+
+  @@index([isActive, sortOrder])
+}
+
+model ItProject {
+  id            String        @id @default(cuid())
+  slug          String        @unique
+  titleId       String
+  titleEn       String
+  summaryId     String?       @db.Text
+  summaryEn     String?       @db.Text
+  bodyId        String?       @db.Text
+  bodyEn        String?       @db.Text
+  coverMediaId  String?
+  coverMedia    Media?        @relation("ItCover", fields: [coverMediaId], references: [id], onDelete: SetNull)
+  clientName    String?
+  techStack     Json?
+  demoUrl       String?
+  repoUrl       String?
+  year          Int?
+  categoryId    String
+  category      ItCategory    @relation(fields: [categoryId], references: [id])
+  status        PublishStatus @default(DRAFT)
+  featured      Boolean       @default(false)
+  sortOrder     Int           @default(0)
+  publishedAt   DateTime?
+  createdById   String
+  createdBy     User          @relation(fields: [createdById], references: [id])
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([categoryId])
+  @@index([status, featured])
+}
+
+model CharityProject {
+  id            String        @id @default(cuid())
+  slug          String        @unique
+  titleId       String
+  titleEn       String
+  summaryId     String?       @db.Text
+  summaryEn     String?       @db.Text
+  bodyId        String?       @db.Text
+  bodyEn        String?       @db.Text
+  coverMediaId  String?
+  coverMedia    Media?        @relation("CharityCover", fields: [coverMediaId], references: [id], onDelete: SetNull)
+  beneficiary   String?
+  location      String?
+  donationUrl   String?
+  goalAmount    Decimal?      @db.Decimal(12, 2)
+  raisedAmount  Decimal?      @db.Decimal(12, 2)
+  periodStart   DateTime?
+  periodEnd     DateTime?
+  status        PublishStatus @default(DRAFT)
+  featured      Boolean       @default(false)
+  sortOrder     Int           @default(0)
+  publishedAt   DateTime?
+  createdById   String
+  createdBy     User          @relation(fields: [createdById], references: [id])
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([status, featured])
+}
+
+model TranslatorService {
+  id              String        @id @default(cuid())
+  slug            String        @unique
+  nameId          String
+  nameEn          String
+  descriptionId   String?       @db.Text
+  descriptionEn   String?       @db.Text
+  iconMediaId     String?
+  iconMedia       Media?        @relation("TranslatorIcon", fields: [iconMediaId], references: [id], onDelete: SetNull)
+  sourceLanguages String[]
+  targetLanguages String[]
+  serviceType     String
+  pricingNoteId   String?       @db.Text
+  pricingNoteEn   String?       @db.Text
+  sampleUrl       String?
+  status          PublishStatus @default(DRAFT)
+  featured        Boolean       @default(false)
+  sortOrder       Int           @default(0)
+  publishedAt     DateTime?
+  createdById     String
+  createdBy       User          @relation(fields: [createdById], references: [id])
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  @@index([status, featured])
+}
+
+model Page {
+  id            String        @id @default(cuid())
+  slug          String        @unique
+  titleId       String
+  titleEn       String
+  bodyId        String?       @db.Text
+  bodyEn        String?       @db.Text
+  seoTitleId    String?
+  seoTitleEn    String?
+  seoDescId     String?
+  seoDescEn     String?
+  status        PublishStatus @default(DRAFT)
+  updatedById   String?
+  updatedBy     User?         @relation("PageUpdatedBy", fields: [updatedById], references: [id], onDelete: SetNull)
+  blocks        PageBlock[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+model PageBlock {
+  id        String @id @default(cuid())
+  pageId    String
+  page      Page   @relation(fields: [pageId], references: [id], onDelete: Cascade)
+  blockType String
+  content   Json
+  sortOrder Int    @default(0)
+  mediaId   String?
+
+  @@index([pageId, sortOrder])
+}
+
+model SiteSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     Json
+  updatedAt DateTime @updatedAt
+}
+
+model ContactMessage {
+  id         String    @id @default(cuid())
+  name       String
+  email      String
+  phone      String?
+  message    String    @db.Text
+  locale     String    @default("id")
+  readAt     DateTime?
+  readById   String?
+  readBy     User?     @relation("ContactReadBy", fields: [readById], references: [id], onDelete: SetNull)
+  createdAt  DateTime  @default(now())
+
+  @@index([createdAt])
+}
+
+model BioPage {
+  id                 String         @id @default(cuid())
+  userId             String         @unique
+  user               User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  slug               String         @unique
+  displayName        String
+  bio                String?        @db.Text
+  avatarMediaId      String?
+  avatarMedia        Media?         @relation("BioAvatar", fields: [avatarMediaId], references: [id], onDelete: SetNull)
+  backgroundMediaId  String?
+  backgroundMedia    Media?         @relation("BioBackground", fields: [backgroundMediaId], references: [id], onDelete: SetNull)
+  status             PublishStatus  @default(DRAFT)
+  publishedAt        DateTime?
+  themePreset        String?
+  backgroundType     BackgroundType @default(COLOR)
+  backgroundValue    String?
+  buttonStyle        String?        @default("rounded")
+  buttonColor        String?        @default("#000000")
+  textColor          String?        @default("#ffffff")
+  fontFamily         String?
+  seoTitle           String?
+  seoDescription     String?
+  viewCount          Int            @default(0)
+  links              BioLink[]
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
+}
+
+model BioLink {
+  id            String   @id @default(cuid())
+  bioPageId     String
+  bioPage       BioPage  @relation(fields: [bioPageId], references: [id], onDelete: Cascade)
+  title         String
+  url           String
+  icon          String?
+  sortOrder     Int      @default(0)
+  isActive      Boolean  @default(true)
+  openInNewTab  Boolean  @default(true)
+  clickCount    Int      @default(0)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  @@index([bioPageId, sortOrder])
+}
