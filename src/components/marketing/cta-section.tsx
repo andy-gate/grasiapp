@@ -2,6 +2,7 @@ import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { ScaleIn } from "./motion/reveal";
 
 export async function CtaSection() {
   const t = await getTranslations("home");
@@ -9,7 +10,8 @@ export async function CtaSection() {
 
   return (
     <section className="mx-auto max-w-6xl px-4 py-20">
-      <div className="relative overflow-hidden rounded-2xl border border-brand-blue/30 px-8 py-14 text-center md:px-16">
+      <ScaleIn>
+        <div className="relative overflow-hidden rounded-2xl border border-brand-blue/30 px-8 py-14 text-center md:px-16">
         <div
           className="absolute inset-0 opacity-60"
           style={{
@@ -18,7 +20,7 @@ export async function CtaSection() {
           }}
         />
         <div className="relative">
-          <h2 className="text-2xl font-semibold text-white md:text-3xl">
+          <h2 className="bg-gradient-to-r from-white via-brand-blue-light to-brand-violet bg-clip-text text-2xl font-semibold tracking-tight text-transparent md:text-3xl">
             {t("ctaTitle")}
           </h2>
           <p className="mx-auto mt-3 max-w-lg text-slate-300">
@@ -34,7 +36,8 @@ export async function CtaSection() {
             {tc("contactUs")}
           </Link>
         </div>
-      </div>
+        </div>
+      </ScaleIn>
     </section>
   );
 }

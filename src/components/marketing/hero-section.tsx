@@ -6,6 +6,7 @@ import { SectionHeading } from "./section-heading";
 import { GridBackground } from "./grid-background";
 import { CodeMockup } from "./code-mockup";
 import { Cpu } from "lucide-react";
+import { HeroEntrance } from "./motion/reveal";
 
 export async function HeroSection() {
   const t = await getTranslations("home");
@@ -15,15 +16,17 @@ export async function HeroSection() {
       <GridBackground />
       <div className="relative mx-auto max-w-6xl">
         <div className="mx-auto max-w-4xl text-center">
-          <SectionHeading
-            badge={t("heroBadge")}
-            heading={t("heroTitle")}
-            description={t("heroSubtitle")}
-            icon={Cpu}
-            as="h1"
-            gradient
-          />
-          <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <HeroEntrance>
+            <SectionHeading
+              badge={t("heroBadge")}
+              heading={t("heroTitle")}
+              description={t("heroSubtitle")}
+              icon={Cpu}
+              as="h1"
+              gradient
+            />
+          </HeroEntrance>
+          <HeroEntrance delay={0.15} className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               href="/contact"
               className={cn(
@@ -42,7 +45,7 @@ export async function HeroSection() {
             >
               {t("ctaIt")}
             </Link>
-          </div>
+          </HeroEntrance>
         </div>
         <CodeMockup />
       </div>

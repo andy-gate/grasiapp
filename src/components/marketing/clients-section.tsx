@@ -5,6 +5,7 @@ import { Building2 } from "lucide-react";
 import { prisma } from "@/lib/db";
 import { pickLocaleField } from "@/lib/content";
 import type { Locale } from "@/i18n/routing";
+import { Reveal, StaggerGroup, StaggerItem } from "./motion/reveal";
 
 export async function ClientsSection({ locale }: { locale: Locale }) {
   const t = await getTranslations("home");
@@ -19,13 +20,15 @@ export async function ClientsSection({ locale }: { locale: Locale }) {
   return (
     <section className="border-b border-white/5 px-4 py-16">
       <div className="mx-auto max-w-6xl">
-        <SectionHeading
-          badge={t("clientsBadge")}
-          heading={t("clientsTitle")}
-          description={t("clientsDesc")}
-          icon={Building2}
-        />
-        <div className="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
+        <Reveal>
+          <SectionHeading
+            badge={t("clientsBadge")}
+            heading={t("clientsTitle")}
+            description={t("clientsDesc")}
+            icon={Building2}
+          />
+        </Reveal>
+        <StaggerGroup className="mt-10 grid grid-cols-2 gap-6 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6">
           {clients.map((client) => {
             const name = pickLocaleField(client, "name", locale);
             const content = client.logoUrl ? (
@@ -47,26 +50,29 @@ export async function ClientsSection({ locale }: { locale: Locale }) {
 
             if (client.websiteUrl) {
               return (
-                <a
-                  key={client.id}
-                  href={client.websiteUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={className}
-                  title={name}
-                >
-                  {content}
-                </a>
+                <StaggerItem key={client.id}>
+                  <a
+                    href={client.websiteUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={className}
+                    title={name}
+                  >
+                    {content}
+                  </a>
+                </StaggerItem>
               );
             }
 
             return (
-              <div key={client.id} className={className} title={name}>
-                {content}
-              </div>
+              <StaggerItem key={client.id}>
+                <div className={className} title={name}>
+                  {content}
+                </div>
+              </StaggerItem>
             );
           })}
-        </div>
+        </StaggerGroup>
       </div>
     </section>
   );

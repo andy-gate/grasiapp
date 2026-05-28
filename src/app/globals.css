@@ -125,6 +125,22 @@
   @apply text-slate-300;
 }
 
+@keyframes marketing-glow-pulse {
+  0%,
+  100% {
+    opacity: 0.75;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .marketing-grid-glow {
+    animation: marketing-glow-pulse 8s ease-in-out infinite;
+  }
+}
+
 .dark {
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);

@@ -1,5 +1,7 @@
 "use client";
 
+import { motion, useReducedMotion } from "framer-motion";
+
 const SNIPPET = `// GrasiApp — custom software
 const build = async (idea: ProjectSpec) => {
   const design = await discover(idea);
@@ -11,10 +13,25 @@ const build = async (idea: ProjectSpec) => {
 };`;
 
 export function CodeMockup() {
+  const reduce = useReducedMotion();
+
   return (
-    <div className="relative mx-auto mt-12 max-w-lg">
-      <div className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-brand-indigo via-brand-blue to-brand-violet opacity-40 blur-xl" />
-      <div className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0d1117]/90 shadow-2xl backdrop-blur-xl">
+    <motion.div
+      className="relative mx-auto mt-12 max-w-lg"
+      initial={reduce ? false : { opacity: 0, y: 32 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.8, delay: 0.35, ease: [0.22, 1, 0.36, 1] }}
+    >
+      <motion.div
+        className="absolute -inset-1 rounded-2xl bg-gradient-to-r from-brand-indigo via-brand-blue to-brand-violet opacity-40 blur-xl"
+        animate={reduce ? undefined : { opacity: [0.3, 0.5, 0.3] }}
+        transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0d1117]/90 shadow-2xl backdrop-blur-xl"
+        animate={reduce ? undefined : { y: [0, -6, 0] }}
+        transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
+      >
         <div className="flex items-center gap-2 border-b border-white/10 px-4 py-3">
           <span className="h-3 w-3 rounded-full bg-red-500/80" />
           <span className="h-3 w-3 rounded-full bg-yellow-500/80" />
@@ -47,7 +64,7 @@ export function CodeMockup() {
             ))}
           </code>
         </pre>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
