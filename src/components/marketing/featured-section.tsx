@@ -17,7 +17,7 @@ export async function FeaturedSection({ locale }: { locale: Locale }) {
   const itProjects = await prisma.itProject.findMany({
     where: { ...publishedWhere(), featured: true },
     take: 3,
-    include: { category: true },
+    include: { categories: true },
     orderBy: { sortOrder: "asc" },
   });
 
@@ -42,12 +42,17 @@ export async function FeaturedSection({ locale }: { locale: Locale }) {
                 className="group block h-full rounded-xl border border-white/10 bg-[#0d1117]/60 p-6 backdrop-blur transition-all hover:border-brand-blue/40 hover:shadow-xl hover:shadow-brand-blue/10"
               >
                 <div className="mb-4 h-1 w-12 rounded-full bg-gradient-to-r from-brand-blue to-brand-violet" />
-                <Badge
-                  variant="secondary"
-                  className="border-brand-blue/20 bg-brand-blue/10 text-brand-blue-light"
-                >
-                  {pickLocaleField(p.category, "name", locale)}
-                </Badge>
+                <div className="mb-4 flex flex-wrap gap-2">
+                  {p.categories.map((cat) => (
+                    <Badge
+                      key={cat.id}
+                      variant="secondary"
+                      className="border-brand-blue/20 bg-brand-blue/10 text-brand-blue-light"
+                    >
+                      {pickLocaleField(cat, "name", locale)}
+                    </Badge>
+                  ))}
+                </div>
                 <h3 className="mt-3 text-lg font-semibold text-white group-hover:text-brand-blue-light">
                   {pickLocaleField(p, "title", locale)}
                 </h3>

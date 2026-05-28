@@ -30,10 +30,10 @@ export default async function ItProjectsPage({
     where: {
       ...publishedWhere(),
       ...(categorySlug
-        ? { category: { slug: categorySlug, isActive: true } }
+        ? { categories: { some: { slug: categorySlug, isActive: true } } }
         : {}),
     },
-    include: { category: true },
+    include: { categories: true },
     orderBy: [{ sortOrder: "asc" }, { publishedAt: "desc" }],
   });
 
@@ -76,12 +76,17 @@ export default async function ItProjectsPage({
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {projects.map((p) => (
               <MarketingCard key={p.id}>
-                <Badge
-                  variant="outline"
-                  className="border-brand-blue/30 text-brand-blue-light"
-                >
-                  {pickLocaleField(p.category, "name", loc)}
-                </Badge>
+                <div className="flex flex-wrap gap-2">
+                  {p.categories.map((cat) => (
+                    <Badge
+                      key={cat.id}
+                      variant="outline"
+                      className="border-brand-blue/30 text-brand-blue-light"
+                    >
+                      {pickLocaleField(cat, "name", loc)}
+                    </Badge>
+                  ))}
+                </div>
                 <h2 className="mt-3 text-lg font-semibold text-white">
                   <Link href={`/it/${p.slug}`} className="marketing-link">
                     {pickLocaleField(p, "title", loc)}

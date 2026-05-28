@@ -171,6 +171,7 @@ async function main() {
   }
 
   const clients = [
+    { slug: "grasiapp", nameId: "GrasiApp", nameEn: "GrasiApp" },
     { slug: "klien-a", nameId: "Klien A", nameEn: "Client A" },
     { slug: "klien-b", nameId: "Klien B", nameEn: "Client B" },
     { slug: "klien-c", nameId: "Klien C", nameEn: "Client C" },
@@ -188,9 +189,22 @@ async function main() {
     });
   }
 
+  const grasiappClient = await prisma.client.findUnique({
+    where: { slug: "grasiapp" },
+  });
+  const stackRecords = await prisma.techStackItem.findMany({
+    where: { slug: { in: ["nextjs", "postgresql"] } },
+  });
+
   await prisma.itProject.upsert({
     where: { slug: "company-profile-platform" },
-    update: {},
+    update: {
+      clientId: grasiappClient?.id ?? null,
+      categories: { set: [{ id: catRecords[0].id }] },
+      techStackItems: {
+        set: stackRecords.map((item) => ({ id: item.id })),
+      },
+    },
     create: {
       slug: "company-profile-platform",
       titleId: "Platform Company Profile",
@@ -199,10 +213,12 @@ async function main() {
       summaryEn: "Company profile website with CMS and admin panel.",
       bodyId: "<p>Proyek internal GrasiApp.</p>",
       bodyEn: "<p>Internal GrasiApp project.</p>",
-      clientName: "GrasiApp",
-      techStack: ["Next.js", "PostgreSQL", "Prisma"],
+      clientId: grasiappClient?.id,
+      techStackItems: {
+        connect: stackRecords.map((item) => ({ id: item.id })),
+      },
       year: 2026,
-      categoryId: catRecords[0].id,
+      categories: { connect: [{ id: catRecords[0].id }] },
       status: PublishStatus.PUBLISHED,
       featured: true,
       sortOrder: 0,

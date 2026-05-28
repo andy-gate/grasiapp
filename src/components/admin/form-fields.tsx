@@ -124,3 +124,79 @@ export function FormCheckbox({
     </label>
   );
 }
+
+export function FormSelect({
+  label,
+  name,
+  options,
+  defaultValue,
+  placeholder,
+  required,
+}: {
+  label: string;
+  name: string;
+  options: { value: string; label: string }[];
+  defaultValue?: string;
+  placeholder?: string;
+  required?: boolean;
+}) {
+  return (
+    <div className="space-y-2">
+      <Label htmlFor={name}>{label}</Label>
+      <select
+        id={name}
+        name={name}
+        required={required}
+        defaultValue={defaultValue ?? ""}
+        className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-xs"
+      >
+        {placeholder && <option value="">{placeholder}</option>}
+        {options.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+}
+
+export function FormMultiCheckbox({
+  label,
+  name,
+  options,
+  defaultValues = [],
+  hint,
+}: {
+  label: string;
+  name: string;
+  options: { value: string; label: string }[];
+  defaultValues?: string[];
+  hint?: string;
+}) {
+  const selected = new Set(defaultValues);
+
+  return (
+    <fieldset className="space-y-2">
+      <legend className="text-sm font-medium">{label}</legend>
+      <div className="grid max-h-48 gap-2 overflow-y-auto rounded-md border border-input p-3 sm:grid-cols-2">
+        {options.map((option) => (
+          <label
+            key={option.value}
+            className="flex items-center gap-2 text-sm"
+          >
+            <input
+              type="checkbox"
+              name={name}
+              value={option.value}
+              defaultChecked={selected.has(option.value)}
+              className="size-4 rounded border"
+            />
+            {option.label}
+          </label>
+        ))}
+      </div>
+      {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
+    </fieldset>
+  );
+}

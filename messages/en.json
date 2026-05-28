@@ -91,7 +91,10 @@
   },
   "it": {
     "title": "Software Projects",
-    "empty": "No projects yet."
+    "empty": "No projects yet.",
+    "website": "Website",
+    "appStore": "App Store",
+    "playStore": "Play Store"
   },
   "charity": {
     "title": "Charity",

@@ -12,7 +12,7 @@ export default async function AdminItProjectsPage() {
   await requirePermission("it_project.manage");
 
   const projects = await prisma.itProject.findMany({
-    include: { category: true },
+    include: { categories: true },
     orderBy: { updatedAt: "desc" },
   });
 
@@ -30,7 +30,7 @@ export default async function AdminItProjectsPage() {
             cells: [
               p.slug,
               p.titleId,
-              p.category.nameId,
+              p.categories.map((c) => c.nameId).join(", ") || "—",
               <StatusBadge key="s" status={p.status} />,
               <RowActions
                 key="a"

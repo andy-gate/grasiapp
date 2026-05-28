@@ -11,9 +11,14 @@ export default async function EditItProjectPage({
 }) {
   await requirePermission("it_project.manage");
   const { id } = await params;
-  const [project, categories] = await Promise.all([
-    prisma.itProject.findUnique({ where: { id } }),
+  const [project, categories, clients, techStackItems] = await Promise.all([
+    prisma.itProject.findUnique({
+      where: { id },
+      include: { categories: true, techStackItems: true },
+    }),
     prisma.itCategory.findMany({ orderBy: { sortOrder: "asc" } }),
+    prisma.client.findMany({ orderBy: { sortOrder: "asc" } }),
+    prisma.techStackItem.findMany({ orderBy: { sortOrder: "asc" } }),
   ]);
   if (!project) notFound();
 
@@ -21,7 +26,12 @@ export default async function EditItProjectPage({
     <div>
       <AdminPageHeader title="Edit Proyek IT" />
       <div className="mt-6">
-        <ItProjectForm project={project} categories={categories} />
+        <ItProjectForm
+          project={project}
+          categories={categories}
+          clients={clients}
+          techStackItems={techStackItems}
+        />
       </div>
     </div>
   );

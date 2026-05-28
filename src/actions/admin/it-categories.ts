@@ -69,7 +69,9 @@ export async function updateItCategory(
 
 export async function deleteItCategory(id: string) {
   await requirePermission("it_category.manage");
-  const count = await prisma.itProject.count({ where: { categoryId: id } });
+  const count = await prisma.itProject.count({
+    where: { categories: { some: { id } } },
+  });
   if (count > 0) {
     throw new Error(`Kategori masih dipakai ${count} proyek`);
   }

@@ -150,61 +150,64 @@ model ItCategory {
 }
 
 model TechStackItem {
-  id        String   @id @default(cuid())
-  slug      String   @unique
+  id        String      @id @default(cuid())
+  slug      String      @unique
   nameId    String
   nameEn    String
-  sortOrder Int      @default(0)
-  isActive  Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  sortOrder Int         @default(0)
+  isActive  Boolean     @default(true)
+  createdAt DateTime    @default(now())
+  updatedAt DateTime    @updatedAt
+  itProjects ItProject[]
 
   @@index([isActive, sortOrder])
 }
 
 model Client {
-  id         String   @id @default(cuid())
-  slug       String   @unique
+  id         String      @id @default(cuid())
+  slug       String      @unique
   nameId     String
   nameEn     String
   logoUrl    String?
   websiteUrl String?
-  sortOrder  Int      @default(0)
-  isActive   Boolean  @default(true)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  sortOrder  Int         @default(0)
+  isActive   Boolean     @default(true)
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  itProjects ItProject[]
 
   @@index([isActive, sortOrder])
 }
 
 model ItProject {
-  id            String        @id @default(cuid())
-  slug          String        @unique
+  id            String          @id @default(cuid())
+  slug          String          @unique
   titleId       String
   titleEn       String
-  summaryId     String?       @db.Text
-  summaryEn     String?       @db.Text
-  bodyId        String?       @db.Text
-  bodyEn        String?       @db.Text
+  summaryId     String?         @db.Text
+  summaryEn     String?         @db.Text
+  bodyId        String?         @db.Text
+  bodyEn        String?         @db.Text
   coverMediaId  String?
-  coverMedia    Media?        @relation("ItCover", fields: [coverMediaId], references: [id], onDelete: SetNull)
-  clientName    String?
-  techStack     Json?
-  demoUrl       String?
-  repoUrl       String?
+  coverMedia    Media?          @relation("ItCover", fields: [coverMediaId], references: [id], onDelete: SetNull)
+  clientId      String?
+  client        Client?         @relation(fields: [clientId], references: [id], onDelete: SetNull)
+  techStackItems TechStackItem[]
+  websiteUrl    String?
+  appStoreUrl   String?
+  playStoreUrl  String?
   year          Int?
-  categoryId    String
-  category      ItCategory    @relation(fields: [categoryId], references: [id])
-  status        PublishStatus @default(DRAFT)
-  featured      Boolean       @default(false)
-  sortOrder     Int           @default(0)
+  categories    ItCategory[]
+  status        PublishStatus   @default(DRAFT)
+  featured      Boolean         @default(false)
+  sortOrder     Int             @default(0)
   publishedAt   DateTime?
   createdById   String
-  createdBy     User          @relation(fields: [createdById], references: [id])
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  createdBy     User            @relation(fields: [createdById], references: [id])
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
 
-  @@index([categoryId])
+  @@index([clientId])
   @@index([status, featured])
 }
 

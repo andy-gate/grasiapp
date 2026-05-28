@@ -9,24 +9,36 @@ import {
   BilingualPair,
   FormCheckbox,
   FormField,
-  FormTextarea,
+  FormMultiCheckbox,
+  FormSelect,
   PublishStatusField,
 } from "@/components/admin/form-fields";
-import type { ItCategory, ItProject } from "@/generated/prisma/client";
+import type {
+  Client,
+  ItCategory,
+  ItProject,
+  TechStackItem,
+} from "@/generated/prisma/client";
+
+type ItProjectWithRelations = ItProject & {
+  categories: ItCategory[];
+  techStackItems: TechStackItem[];
+};
 
 export function ItProjectForm({
   project,
   categories,
+  clients,
+  techStackItems,
 }: {
-  project?: ItProject;
+  project?: ItProjectWithRelations;
   categories: ItCategory[];
+  clients: Client[];
+  techStackItems: TechStackItem[];
 }) {
   const action = project
     ? updateItProject.bind(null, project.id)
     : createItProject;
-  const techStack = Array.isArray(project?.techStack)
-    ? (project.techStack as string[]).join(", ")
-    : "";
 
   return (
     <AdminForm
@@ -55,39 +67,52 @@ export function ItProjectForm({
         values={{ id: project?.bodyId ?? "", en: project?.bodyEn ?? "" }}
         multiline
       />
-      <div className="space-y-2">
-        <label htmlFor="categoryId" className="text-sm font-medium">
-          Kategori
-        </label>
-        <select
-          id="categoryId"
-          name="categoryId"
-          required
-          defaultValue={project?.categoryId}
-          className="flex h-9 w-full rounded-md border border-input px-3 text-sm"
-        >
-          <option value="">Pilih kategori</option>
-          {categories.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.nameId}
-            </option>
-          ))}
-        </select>
-      </div>
-      <FormField
+      <FormMultiCheckbox
+        label="Kategori"
+        name="categoryIds"
+        hint="Pilih satu atau lebih kategori proyek."
+        defaultValues={project?.categories.map((c) => c.id) ?? []}
+        options={categories.map((c) => ({
+          value: c.id,
+          label: c.nameId,
+        }))}
+      />
+      <FormSelect
         label="Klien"
-        name="clientName"
-        defaultValue={project?.clientName ?? ""}
+        name="clientId"
+        placeholder="Pilih klien (opsional)"
+        defaultValue={project?.clientId ?? ""}
+        options={clients.map((c) => ({
+          value: c.id,
+          label: c.nameId,
+        }))}
       />
-      <FormField
+      <FormMultiCheckbox
         label="Tech stack"
-        name="techStack"
-        defaultValue={techStack}
-        hint="Pisahkan dengan koma, contoh: Next.js, PostgreSQL"
+        name="techStackIds"
+        hint="Pilih satu atau lebih teknologi yang dipakai proyek ini."
+        defaultValues={project?.techStackItems.map((item) => item.id) ?? []}
+        options={techStackItems.map((item) => ({
+          value: item.id,
+          label: item.nameId,
+        }))}
       />
-      <div className="grid gap-4 md:grid-cols-2">
-        <FormField label="Demo URL" name="demoUrl" defaultValue={project?.demoUrl ?? ""} />
-        <FormField label="Repo URL" name="repoUrl" defaultValue={project?.repoUrl ?? ""} />
+      <div className="grid gap-4 md:grid-cols-3">
+        <FormField
+          label="Website"
+          name="websiteUrl"
+          defaultValue={project?.websiteUrl ?? ""}
+        />
+        <FormField
+          label="App Store"
+          name="appStoreUrl"
+          defaultValue={project?.appStoreUrl ?? ""}
+        />
+        <FormField
+          label="Play Store"
+          name="playStoreUrl"
+          defaultValue={project?.playStoreUrl ?? ""}
+        />
       </div>
       <FormField
         label="Tahun"
