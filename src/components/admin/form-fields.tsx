@@ -125,6 +125,26 @@ export function FormCheckbox({
   );
 }
 
+export function FormFile({
+  label,
+  name,
+  accept,
+  hint,
+}: {
+  label: string;
+  name: string;
+  accept?: string;
+  hint?: string;
+}) {
+  return (
+    <div className="space-y-2">
+      <Label htmlFor={name}>{label}</Label>
+      <Input id={name} name={name} type="file" accept={accept} />
+      {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
+    </div>
+  );
+}
+
 export function FormSelect({
   label,
   name,

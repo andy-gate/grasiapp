@@ -1,8 +1,11 @@
 import "dotenv/config";
+import { existsSync, readFileSync } from "node:fs";
+import path from "node:path";
 import { PrismaClient, PublishStatus } from "../src/generated/prisma/client";
 import { PrismaPg } from "@prisma/adapter-pg";
 import pg from "pg";
 import bcrypt from "bcryptjs";
+import { slugify } from "../src/lib/slug";
 
 const pool = new pg.Pool({ connectionString: process.env.DATABASE_URL });
 const adapter = new PrismaPg(pool);
@@ -170,28 +173,58 @@ async function main() {
     });
   }
 
-  const clients = [
-    { slug: "grasiapp", nameId: "GrasiApp", nameEn: "GrasiApp" },
-    { slug: "klien-a", nameId: "Klien A", nameEn: "Client A" },
-    { slug: "klien-b", nameId: "Klien B", nameEn: "Client B" },
-    { slug: "klien-c", nameId: "Klien C", nameEn: "Client C" },
-    { slug: "klien-d", nameId: "Klien D", nameEn: "Client D" },
-    { slug: "klien-e", nameId: "Klien E", nameEn: "Client E" },
-    { slug: "klien-f", nameId: "Klien F", nameEn: "Client F" },
-  ];
+  // Impor klien dari project_clients.json (logo dipetakan ke public/client per nama file)
+  type RawClient = {
+    name: string;
+    short: string | null;
+    photo: string | null;
+    deleted_at: string | null;
+  };
 
-  for (let i = 0; i < clients.length; i++) {
-    const client = clients[i];
+  const resolveLogo = (photo: string | null): string | null => {
+    if (!photo) return null;
+    const file = photo.replace(/^.*\//, "");
+    if (!file) return null;
+    return existsSync(path.join(process.cwd(), "public", "client", file))
+      ? `/client/${file}`
+      : null;
+  };
+
+  const rawClients: RawClient[] = JSON.parse(
+    readFileSync(path.join(process.cwd(), "project_clients.json"), "utf8"),
+  );
+
+  const usedSlugs = new Set<string>();
+  let order = 0;
+  for (const rc of rawClients) {
+    if (rc.deleted_at) continue;
+    const baseSlug = slugify(rc.short || rc.name) || slugify(rc.name);
+    if (!baseSlug) continue;
+    let slug = baseSlug;
+    let suffix = 2;
+    while (usedSlugs.has(slug)) slug = `${baseSlug}-${suffix++}`;
+    usedSlugs.add(slug);
+
+    const data = {
+      nameId: rc.name,
+      nameEn: rc.name,
+      logoUrl: resolveLogo(rc.photo),
+      sortOrder: order,
+      isActive: true,
+    };
     await prisma.client.upsert({
-      where: { slug: client.slug },
-      update: { ...client, sortOrder: i, isActive: true },
-      create: { ...client, sortOrder: i, isActive: true },
+      where: { slug },
+      update: data,
+      create: { slug, ...data },
     });
+    order++;
   }
 
-  const grasiappClient = await prisma.client.findUnique({
-    where: { slug: "grasiapp" },
+  // Hapus klien yang tidak lagi ada di daftar (termasuk grasiapp & placeholder lama)
+  await prisma.client.deleteMany({
+    where: { slug: { notIn: [...usedSlugs] } },
   });
+
   const stackRecords = await prisma.techStackItem.findMany({
     where: { slug: { in: ["nextjs", "postgresql"] } },
   });
@@ -199,7 +232,6 @@ async function main() {
   await prisma.itProject.upsert({
     where: { slug: "company-profile-platform" },
     update: {
-      clientId: grasiappClient?.id ?? null,
       categories: { set: [{ id: catRecords[0].id }] },
       techStackItems: {
         set: stackRecords.map((item) => ({ id: item.id })),
@@ -213,7 +245,6 @@ async function main() {
       summaryEn: "Company profile website with CMS and admin panel.",
       bodyId: "<p>Proyek internal GrasiApp.</p>",
       bodyEn: "<p>Internal GrasiApp project.</p>",
-      clientId: grasiappClient?.id,
       techStackItems: {
         connect: stackRecords.map((item) => ({ id: item.id })),
       },

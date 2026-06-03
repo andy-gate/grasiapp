@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { redirect, unstable_rethrow } from "next/navigation";
 import { z } from "zod";
 import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/db";
@@ -70,6 +70,7 @@ export async function createUser(
     revalidatePath("/admin/users");
     redirect("/admin/users");
   } catch (e) {
+    unstable_rethrow(e);
     return fail(e instanceof Error ? e.message : "Gagal menyimpan");
   }
 }
@@ -111,6 +112,7 @@ export async function updateUser(
     revalidatePath("/admin/users");
     redirect("/admin/users");
   } catch (e) {
+    unstable_rethrow(e);
     return fail(e instanceof Error ? e.message : "Gagal menyimpan");
   }
 }

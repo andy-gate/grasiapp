@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { redirect, unstable_rethrow } from "next/navigation";
 import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { requirePermission } from "@/lib/admin-auth";
@@ -84,6 +84,7 @@ export async function createTranslatorService(
     revalidatePath("/en/translator");
     redirect("/admin/translator");
   } catch (e) {
+    unstable_rethrow(e);
     return fail(e instanceof Error ? e.message : "Gagal menyimpan");
   }
 }
@@ -113,6 +114,7 @@ export async function updateTranslatorService(
     revalidatePath("/en/translator");
     redirect("/admin/translator");
   } catch (e) {
+    unstable_rethrow(e);
     return fail(e instanceof Error ? e.message : "Gagal menyimpan");
   }
 }

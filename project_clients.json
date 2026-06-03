@@ -1,0 +1,156 @@
+[
+  {
+    "id": 1,
+    "name": "Balai Besar Kalibrasi Fasilitas Penerbangan",
+    "short": "BBKFP",
+    "photo": "client/bbkfp.png",
+    "created_by": 1,
+    "created_at": "2022-01-07 03:21:55",
+    "updated_at": "2024-01-01 21:15:18",
+    "deleted_at": null,
+    "category_id": 1
+  },
+  {
+    "id": 2,
+    "name": "Analis Anggaran Indonesia",
+    "short": "AAI",
+    "photo": "client/aai.png",
+    "created_by": 1,
+    "created_at": "2022-01-07 04:00:52",
+    "updated_at": "2024-01-01 21:17:30",
+    "deleted_at": null,
+    "category_id": 5
+  },
+  {
+    "id": 3,
+    "name": "Fakultas Sains dan Teknologi Universitas Airlangga",
+    "short": "FST UA",
+    "photo": "client/unair.png",
+    "created_by": 1,
+    "created_at": "2022-01-07 04:01:45",
+    "updated_at": "2024-01-01 21:18:16",
+    "deleted_at": null,
+    "category_id": 6
+  },
+  {
+    "id": 4,
+    "name": "ID Central - Subex Ltd",
+    "short": "ID Central",
+    "photo": "client/id_central.png",
+    "created_by": 1,
+    "created_at": "2022-01-07 04:02:38",
+    "updated_at": "2024-01-01 21:18:25",
+    "deleted_at": null,
+    "category_id": 3
+  },
+  {
+    "id": 5,
+    "name": "Gereja Kristen di Indonesia Darmo Permai Surabaya",
+    "short": "GKI Damai",
+    "photo": "client/gki_damai.png",
+    "created_by": 1,
+    "created_at": "2022-01-07 04:03:26",
+    "updated_at": "2024-01-01 21:19:20",
+    "deleted_at": null,
+    "category_id": 7
+  },
+  {
+    "id": 6,
+    "name": "Kementerian Keuangan Republik Indonesia",
+    "short": "Kemenkeu RI",
+    "photo": "client/kemenkeu.png",
+    "created_by": 1,
+    "created_at": "2022-01-07 04:39:51",
+    "updated_at": "2024-01-03 18:31:39",
+    "deleted_at": null,
+    "category_id": 2
+  },
+  {
+    "id": 7,
+    "name": "Pemerintah Kota Jombang",
+    "short": "Pemkot Jombang",
+    "photo": "client/jombang.png",
+    "created_by": 1,
+    "created_at": "2022-01-07 04:40:19",
+    "updated_at": "2024-01-01 21:19:30",
+    "deleted_at": null,
+    "category_id": 2
+  },
+  {
+    "id": 8,
+    "name": "PT Telkom Indonesia",
+    "short": "Telkom",
+    "photo": "client/telkom.png",
+    "created_by": 1,
+    "created_at": "2022-01-07 04:41:28",
+    "updated_at": "2024-01-03 18:31:54",
+    "deleted_at": null,
+    "category_id": 1
+  },
+  {
+    "id": 9,
+    "name": "Persekutuan Mahasiswa Kristen ITS",
+    "short": "PMK ITS",
+    "photo": "client/pmk_its.png",
+    "created_by": 1,
+    "created_at": "2022-01-13 16:10:45",
+    "updated_at": "2024-01-01 21:19:44",
+    "deleted_at": null,
+    "category_id": 7
+  },
+  {
+    "id": 10,
+    "name": "Kementerian Komunikasi dan Informatika Republik Indonesia",
+    "short": "Kominfo RI",
+    "photo": "client/kominfo.png",
+    "created_by": 1,
+    "created_at": "2022-05-30 09:47:29",
+    "updated_at": "2024-01-01 21:19:49",
+    "deleted_at": null,
+    "category_id": 2
+  },
+  {
+    "id": 11,
+    "name": "Pemerintah Kota Ambon",
+    "short": "Pemkot Ambon",
+    "photo": "client/pemkot_ambon.png",
+    "created_by": 1,
+    "created_at": "2022-08-06 13:37:04",
+    "updated_at": "2024-01-01 21:19:55",
+    "deleted_at": null,
+    "category_id": 2
+  },
+  {
+    "id": 12,
+    "name": "Institut Teknologi Sepuluh Nopember Surabaya",
+    "short": "ITS Surabaya",
+    "photo": "client/its.png",
+    "created_by": 1,
+    "created_at": "2022-08-06 13:38:01",
+    "updated_at": "2024-01-01 21:20:03",
+    "deleted_at": null,
+    "category_id": 6
+  },
+  {
+    "id": 13,
+    "name": "Kementerian Desa, Pembangunan Daerah Tertinggal, dan Transmigrasi",
+    "short": "Kemendesa",
+    "photo": "client/kemendesa.png",
+    "created_by": 1,
+    "created_at": "2024-01-03 14:56:32",
+    "updated_at": "2024-01-03 15:19:17",
+    "deleted_at": null,
+    "category_id": 2
+  },
+  {
+    "id": 14,
+    "name": "My Sunday Notes",
+    "short": "MSN",
+    "photo": "client/msn.png",
+    "created_by": 1,
+    "created_at": "2024-01-03 16:53:15",
+    "updated_at": "2024-01-03 16:53:15",
+    "deleted_at": null,
+    "category_id": 7
+  }
+]
