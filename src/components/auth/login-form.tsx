@@ -48,35 +48,43 @@ export function LoginForm({
   }
 
   return (
-    <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 py-12">
-      <BrandLogo size="lg" className="mb-8" />
-      <Card className="w-full max-w-md border-white/10 bg-[#0d1117]/80 text-white backdrop-blur-xl">
-        <CardHeader>
-          <CardTitle className="text-white">{title ?? t("title")}</CardTitle>
-          <CardDescription className="text-slate-400">
+    <div className="flex w-full max-w-2xl flex-col items-center justify-center px-6 py-0">
+      <BrandLogo size="lg" className="mb-8 md:mb-10 md:scale-110" />
+      <Card className="w-full max-w-xl border-white/10 bg-[#0d1117]/80 text-white backdrop-blur-xl">
+        <CardHeader className="space-y-2 p-8 pb-4">
+          <CardTitle className="text-2xl text-white md:text-3xl">
+            {title ?? t("title")}
+          </CardTitle>
+          <CardDescription className="text-base text-slate-400">
             {description ?? t("description")}
           </CardDescription>
         </CardHeader>
-        <CardContent>
-          <form onSubmit={onSubmit} className="space-y-4">
+        <CardContent className="p-8 pt-2">
+          <form onSubmit={onSubmit} className="space-y-5">
             <div className="space-y-2">
-              <Label htmlFor="identifier">{t("identifier")}</Label>
+              <Label htmlFor="identifier" className="text-base">
+                {t("identifier")}
+              </Label>
               <Input
                 id="identifier"
                 name="identifier"
                 type="text"
                 autoComplete="username"
                 defaultValue="admin"
+                className="h-12 text-base"
                 required
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">{t("password")}</Label>
+              <Label htmlFor="password" className="text-base">
+                {t("password")}
+              </Label>
               <Input
                 id="password"
                 name="password"
                 type="password"
                 autoComplete="current-password"
+                className="h-12 text-base"
                 required
               />
             </div>
@@ -85,7 +93,7 @@ export function LoginForm({
             )}
             <Button
               type="submit"
-              className="w-full border-0 bg-gradient-to-r from-brand-indigo to-brand-blue shadow-lg shadow-brand-blue/25 hover:opacity-90"
+              className="h-12 w-full border-0 bg-linear-to-r from-brand-indigo to-brand-blue text-base shadow-lg shadow-brand-blue/25 hover:opacity-90"
               disabled={loading}
             >
               {loading ? t("loading") : t("submit")}

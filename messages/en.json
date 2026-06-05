@@ -15,8 +15,7 @@
     "charity": "Charity",
     "translator": "Translator",
     "contact": "Contact",
-    "admin": "Admin",
-    "login": "Sign in"
+    "admin": "Admin"
   },
   "home": {
     "heroBadge": "Software Engineering Studio",

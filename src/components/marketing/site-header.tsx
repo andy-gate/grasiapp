@@ -3,7 +3,6 @@
 import { useState } from "react";
 import { useTranslations, useLocale } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
-import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 import { BrandLogo } from "./brand-logo";
@@ -53,15 +52,6 @@ export function SiteHeader() {
           >
             {locale === "id" ? "EN" : "ID"}
           </Link>
-          <Link
-            href="/login"
-            className={cn(
-              buttonVariants({ size: "sm" }),
-              "hidden border-0 bg-gradient-to-r from-brand-indigo to-brand-blue sm:inline-flex hover:opacity-90",
-            )}
-          >
-            {t("login")}
-          </Link>
           <button
             type="button"
             className="inline-flex text-white md:hidden"
@@ -86,9 +76,6 @@ export function SiteHeader() {
                 {t(item.key)}
               </Link>
             ))}
-            <Link href="/login" onClick={() => setOpen(false)}>
-              {t("login")}
-            </Link>
           </div>
         </nav>
       )}

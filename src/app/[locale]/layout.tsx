@@ -6,6 +6,7 @@ import { routing } from "@/i18n/routing";
 export const dynamic = "force-dynamic";
 import { SiteHeader } from "@/components/marketing/site-header";
 import { SiteFooter } from "@/components/marketing/site-footer";
+import { LocaleChrome } from "@/components/marketing/locale-chrome";
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
@@ -28,11 +29,9 @@ export default async function LocaleLayout({
 
   return (
     <NextIntlClientProvider messages={messages}>
-      <div className="marketing-theme flex min-h-screen flex-col bg-black text-slate-100">
-        <SiteHeader />
-        <main className="flex-1">{children}</main>
-        <SiteFooter />
-      </div>
+      <LocaleChrome header={<SiteHeader />} footer={<SiteFooter />}>
+        {children}
+      </LocaleChrome>
     </NextIntlClientProvider>
   );
 }
