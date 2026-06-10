@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import {
   createItProject,
   updateItProject,
@@ -8,6 +9,7 @@ import { AdminForm } from "@/components/admin/admin-form";
 import {
   BilingualPair,
   FormCheckbox,
+  FormFile,
   FormField,
   FormMultiCheckbox,
   FormSelect,
@@ -114,6 +116,42 @@ export function ItProjectForm({
           defaultValue={project?.playStoreUrl ?? ""}
         />
       </div>
+      <FormFile
+        label="Screenshot Aplikasi (Bisa Banyak)"
+        name="screenshotFiles"
+        accept="image/png,image/jpeg,image/webp"
+        multiple
+        hint="Upload satu atau lebih screenshot (PNG/JPG/WEBP, maks 5MB per file). Jika diisi, gallery lama akan diganti."
+      />
+      {(project?.galleryUrls?.length ?? 0) > 0 && (
+        <div className="space-y-2">
+          <p className="text-sm font-medium">Preview gallery saat ini</p>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {(project?.galleryUrls ?? []).map((url, idx) => (
+              <Image
+                key={`${url}-${idx}`}
+                src={url}
+                alt={`${project.titleId} screenshot ${idx + 1}`}
+                width={960}
+                height={540}
+                className="h-40 w-full rounded-md border border-border object-cover"
+              />
+            ))}
+          </div>
+        </div>
+      )}
+      {(project?.galleryUrls?.length ?? 0) === 0 && project?.screenshotUrl && (
+        <div className="space-y-2">
+          <p className="text-sm font-medium">Preview screenshot saat ini</p>
+          <Image
+            src={project.screenshotUrl}
+            alt={project.titleId}
+            width={960}
+            height={540}
+            className="h-40 w-full rounded-md border border-border object-cover sm:max-w-md"
+          />
+        </div>
+      )}
       <FormField
         label="Tahun"
         name="year"

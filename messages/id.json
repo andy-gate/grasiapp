@@ -93,7 +93,8 @@
     "empty": "Belum ada proyek.",
     "website": "Website",
     "appStore": "App Store",
-    "playStore": "Play Store"
+    "playStore": "Play Store",
+    "otherProjects": "Proyek Lainnya"
   },
   "charity": {
     "title": "Charity",

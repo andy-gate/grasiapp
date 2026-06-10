@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import Image from "next/image";
 import { prisma } from "@/lib/db";
 import { publishedWhere, pickLocaleField } from "@/lib/content";
 import type { Locale } from "@/i18n/routing";
@@ -24,7 +25,7 @@ export async function FeaturedSection({ locale }: { locale: Locale }) {
   if (itProjects.length === 0) return null;
 
   return (
-    <section className="border-y border-white/5 bg-white/[0.02] px-4 py-20">
+    <section className="border-y border-white/5 bg-white/2 px-4 py-20">
       <div className="mx-auto max-w-6xl">
         <Reveal>
           <SectionHeading
@@ -41,7 +42,18 @@ export async function FeaturedSection({ locale }: { locale: Locale }) {
                 href={`/it/${p.slug}`}
                 className="group block h-full rounded-xl border border-white/10 bg-[#0d1117]/60 p-6 backdrop-blur transition-all hover:border-brand-blue/40 hover:shadow-xl hover:shadow-brand-blue/10"
               >
-                <div className="mb-4 h-1 w-12 rounded-full bg-gradient-to-r from-brand-blue to-brand-violet" />
+                {p.screenshotUrl && (
+                  <div className="mb-5 aspect-video overflow-hidden rounded-lg border border-white/10 bg-black/20">
+                    <Image
+                      src={p.screenshotUrl}
+                      alt={pickLocaleField(p, "title", locale)}
+                      width={960}
+                      height={540}
+                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                    />
+                  </div>
+                )}
+                <div className="mb-4 h-1 w-12 rounded-full bg-linear-to-r from-brand-blue to-brand-violet" />
                 <div className="mb-4 flex flex-wrap gap-2">
                   {p.categories.map((cat) => (
                     <Badge

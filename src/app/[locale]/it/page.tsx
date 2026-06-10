@@ -1,5 +1,6 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import Image from "next/image";
 import { prisma } from "@/lib/db";
 import { publishedWhere, pickLocaleField } from "@/lib/content";
 import type { Locale } from "@/i18n/routing";
@@ -76,6 +77,17 @@ export default async function ItProjectsPage({
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {projects.map((p) => (
               <MarketingCard key={p.id}>
+                {p.screenshotUrl && (
+                  <div className="mb-4 aspect-video overflow-hidden rounded-lg border border-white/10 bg-black/20">
+                    <Image
+                      src={p.screenshotUrl}
+                      alt={pickLocaleField(p, "title", loc)}
+                      width={960}
+                      height={540}
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
+                )}
                 <div className="flex flex-wrap gap-2">
                   {p.categories.map((cat) => (
                     <Badge

@@ -196,6 +196,8 @@ model ItProject {
   websiteUrl    String?
   appStoreUrl   String?
   playStoreUrl  String?
+  screenshotUrl String?
+  galleryUrls   String[]        @default([])
   year          Int?
   categories    ItCategory[]
   status        PublishStatus   @default(DRAFT)

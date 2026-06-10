@@ -1,0 +1,2 @@
+ALTER TABLE "ItProject"
+ADD COLUMN "galleryUrls" TEXT[] DEFAULT ARRAY[]::TEXT[];

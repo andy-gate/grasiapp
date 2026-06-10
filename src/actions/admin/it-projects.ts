@@ -1,5 +1,8 @@
 "use server";
 
+import { randomUUID } from "node:crypto";
+import { mkdir, writeFile } from "node:fs/promises";
+import path from "node:path";
 import { revalidatePath } from "next/cache";
 import { redirect, unstable_rethrow } from "next/navigation";
 import { z } from "zod";
@@ -23,11 +26,46 @@ const schema = z.object({
   websiteUrl: z.string().optional(),
   appStoreUrl: z.string().optional(),
   playStoreUrl: z.string().optional(),
+  screenshotUrl: z.string().optional(),
+  galleryUrls: z.array(z.string()).default([]),
   year: z.coerce.number().int().optional().nullable(),
   status: z.nativeEnum(PublishStatus),
   featured: z.boolean(),
   sortOrder: z.coerce.number().int().default(0),
 });
+
+const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads", "it-projects");
+const ALLOWED_SCREENSHOT_TYPES = new Map([
+  ["image/png", "png"],
+  ["image/jpeg", "jpg"],
+  ["image/webp", "webp"],
+]);
+const MAX_SCREENSHOT_BYTES = 5 * 1024 * 1024;
+
+async function saveUploadedScreenshots(
+  formData: FormData,
+): Promise<string[]> {
+  const files = formData
+    .getAll("screenshotFiles")
+    .filter((value): value is File => value instanceof File && value.size > 0);
+  if (files.length === 0) return [];
+  await mkdir(UPLOAD_DIR, { recursive: true });
+  const uploaded: string[] = [];
+  for (const file of files) {
+    const ext = ALLOWED_SCREENSHOT_TYPES.get(file.type);
+    if (!ext) throw new Error("Format screenshot harus PNG, JPG, atau WEBP");
+    if (file.size > MAX_SCREENSHOT_BYTES) {
+      throw new Error("Ukuran screenshot maksimal 5MB per file");
+    }
+    const filename = `${randomUUID()}.${ext}`;
+    await writeFile(
+      path.join(UPLOAD_DIR, filename),
+      Buffer.from(await file.arrayBuffer()),
+    );
+    uploaded.push(`/uploads/it-projects/${filename}`);
+  }
+  return uploaded;
+}
 
 function parse(formData: FormData, userId: string) {
   const titleId = String(formData.get("titleId") ?? "").trim();
@@ -49,6 +87,8 @@ function parse(formData: FormData, userId: string) {
     websiteUrl: String(formData.get("websiteUrl") ?? "").trim() || undefined,
     appStoreUrl: String(formData.get("appStoreUrl") ?? "").trim() || undefined,
     playStoreUrl: String(formData.get("playStoreUrl") ?? "").trim() || undefined,
+    screenshotUrl: String(formData.get("screenshotUrl") ?? "").trim() || undefined,
+    galleryUrls: [],
     year: yearRaw ? Number(yearRaw) : null,
     status,
     featured: formData.get("featured") === "on",
@@ -72,6 +112,12 @@ export async function createItProject(
 ): Promise<ActionResult> {
   const session = await requirePermission("it_project.manage");
   try {
+    const parsed = parse(formData, session.user.id);
+    const uploadedScreenshots = await saveUploadedScreenshots(formData);
+    if (uploadedScreenshots.length > 0) {
+      parsed.galleryUrls = uploadedScreenshots;
+      parsed.screenshotUrl = uploadedScreenshots[0];
+    }
     const {
       categoryConnect,
       techStackConnect,
@@ -79,7 +125,7 @@ export async function createItProject(
       createdById,
       clientId,
       ...data
-    } = parse(formData, session.user.id);
+    } = parsed;
     await prisma.itProject.create({
       data: {
         ...data,
@@ -109,6 +155,12 @@ export async function updateItProject(
 ): Promise<ActionResult> {
   const session = await requirePermission("it_project.manage");
   try {
+    const parsed = parse(formData, session.user.id);
+    const uploadedScreenshots = await saveUploadedScreenshots(formData);
+    if (uploadedScreenshots.length > 0) {
+      parsed.galleryUrls = uploadedScreenshots;
+      parsed.screenshotUrl = uploadedScreenshots[0];
+    }
     const {
       categoryConnect,
       techStackConnect,
@@ -116,7 +168,7 @@ export async function updateItProject(
       createdById,
       clientId,
       ...data
-    } = parse(formData, session.user.id);
+    } = parsed;
     await prisma.itProject.update({
       where: { id },
       data: {

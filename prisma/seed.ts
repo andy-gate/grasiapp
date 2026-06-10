@@ -225,38 +225,178 @@ async function main() {
     where: { slug: { notIn: [...usedSlugs] } },
   });
 
+  const categoryMap = new Map(catRecords.map((c) => [c.slug, c.id]));
   const stackRecords = await prisma.techStackItem.findMany({
-    where: { slug: { in: ["nextjs", "postgresql"] } },
-  });
-
-  await prisma.itProject.upsert({
-    where: { slug: "company-profile-platform" },
-    update: {
-      categories: { set: [{ id: catRecords[0].id }] },
-      techStackItems: {
-        set: stackRecords.map((item) => ({ id: item.id })),
+    where: {
+      slug: {
+        in: [
+          "nextjs",
+          "postgresql",
+          "react",
+          "typescript",
+          "nodejs",
+          "cloud",
+          "docker",
+          "api-rest",
+        ],
       },
     },
-    create: {
+  });
+  const stackMap = new Map(stackRecords.map((s) => [s.slug, s.id]));
+  const clientRecords = await prisma.client.findMany({
+    where: {
+      slug: { in: ["telkom", "kemenkeu-ri", "msn", "bbkfp"] },
+    },
+  });
+  const clientMap = new Map(clientRecords.map((c) => [c.slug, c.id]));
+
+  const itProjects = [
+    {
       slug: "company-profile-platform",
       titleId: "Platform Company Profile",
       titleEn: "Company Profile Platform",
       summaryId: "Website company profile dengan CMS dan admin panel.",
       summaryEn: "Company profile website with CMS and admin panel.",
-      bodyId: "<p>Proyek internal GrasiApp.</p>",
-      bodyEn: "<p>Internal GrasiApp project.</p>",
-      techStackItems: {
-        connect: stackRecords.map((item) => ({ id: item.id })),
-      },
+      bodyId:
+        "<p>Dummy project untuk menampilkan format detail proyek website corporate lengkap dengan CMS, manajemen konten, dan integrasi contact form.</p>",
+      bodyEn:
+        "<p>Dummy project to preview website project detail layout with CMS, content management, and contact form integration.</p>",
       year: 2026,
-      categories: { connect: [{ id: catRecords[0].id }] },
-      status: PublishStatus.PUBLISHED,
+      categorySlugs: ["web"],
+      techStackSlugs: ["nextjs", "typescript", "postgresql"],
+      clientSlug: "bbkfp",
       featured: true,
       sortOrder: 0,
-      publishedAt: new Date(),
-      createdById: admin.id,
+      websiteUrl: "https://example.com/company-profile",
+      screenshotUrl: "/client/bbkfp.png",
+      galleryUrls: ["/client/bbkfp.png", "/client/id_central.png", "/client/unair.png"],
     },
-  });
+    {
+      slug: "mobile-loyalty-app",
+      titleId: "Aplikasi Loyalty Pelanggan",
+      titleEn: "Customer Loyalty Mobile App",
+      summaryId: "Aplikasi mobile untuk point reward, voucher, dan notifikasi promo.",
+      summaryEn:
+        "Mobile app for reward points, vouchers, and promotional notifications.",
+      bodyId:
+        "<p>Dummy project mobile untuk simulasi tampilan kartu proyek dengan link Website, App Store, dan Play Store.</p>",
+      bodyEn:
+        "<p>Dummy mobile project to preview project cards with Website, App Store, and Play Store links.</p>",
+      year: 2025,
+      categorySlugs: ["mobile"],
+      techStackSlugs: ["react", "nodejs", "api-rest", "cloud"],
+      clientSlug: "telkom",
+      featured: true,
+      sortOrder: 1,
+      websiteUrl: "https://example.com/loyalty",
+      appStoreUrl: "https://apps.apple.com/",
+      playStoreUrl: "https://play.google.com/store",
+      screenshotUrl: "/client/telkom.png",
+      galleryUrls: ["/client/telkom.png", "/client/msn.png", "/client/pmk_its.png"],
+    },
+    {
+      slug: "smart-analytics-dashboard",
+      titleId: "Dashboard Analitik Cerdas",
+      titleEn: "Smart Analytics Dashboard",
+      summaryId: "Dashboard KPI real-time dengan laporan otomatis dan insight berbasis data.",
+      summaryEn:
+        "Real-time KPI dashboard with automated reporting and data-driven insights.",
+      bodyId:
+        "<p>Dummy project dashboard data untuk uji tampilan kategori multiple, tech stack badges, dan konten detail yang lebih panjang.</p>",
+      bodyEn:
+        "<p>Dummy analytics dashboard project to test multiple categories, tech stack badges, and longer detail content.</p>",
+      year: 2024,
+      categorySlugs: ["web", "ai"],
+      techStackSlugs: ["nextjs", "postgresql", "docker", "cloud"],
+      clientSlug: "kemenkeu-ri",
+      featured: false,
+      sortOrder: 2,
+      websiteUrl: "https://example.com/analytics",
+      screenshotUrl: "/client/kemenkeu.png",
+      galleryUrls: ["/client/kemenkeu.png", "/client/kominfo.png", "/client/its.png"],
+    },
+    {
+      slug: "translation-workflow-portal",
+      titleId: "Portal Workflow Penerjemahan",
+      titleEn: "Translation Workflow Portal",
+      summaryId:
+        "Portal internal untuk assignment penerjemah, review kualitas, dan tracking deadline.",
+      summaryEn:
+        "Internal portal for translator assignments, quality review, and deadline tracking.",
+      bodyId:
+        "<p>Dummy project portal operasional untuk melihat variasi tampilan list ketika jumlah project lebih banyak.</p>",
+      bodyEn:
+        "<p>Dummy operations portal project to preview list layout with more project entries.</p>",
+      year: 2026,
+      categorySlugs: ["web", "infrastructure"],
+      techStackSlugs: ["react", "typescript", "nodejs", "postgresql"],
+      clientSlug: "msn",
+      featured: false,
+      sortOrder: 3,
+      websiteUrl: "https://example.com/translation-portal",
+      screenshotUrl: "/client/msn.png",
+      galleryUrls: ["/client/msn.png", "/client/gki_damai.png", "/client/pemkot_ambon.png"],
+    },
+  ];
+
+  for (const project of itProjects) {
+    const categoryConnect = project.categorySlugs
+      .map((slug) => categoryMap.get(slug))
+      .filter((id): id is string => Boolean(id))
+      .map((id) => ({ id }));
+    const techStackConnect = project.techStackSlugs
+      .map((slug) => stackMap.get(slug))
+      .filter((id): id is string => Boolean(id))
+      .map((id) => ({ id }));
+    const clientId = project.clientSlug ? clientMap.get(project.clientSlug) : null;
+
+    await prisma.itProject.upsert({
+      where: { slug: project.slug },
+      update: {
+        titleId: project.titleId,
+        titleEn: project.titleEn,
+        summaryId: project.summaryId,
+        summaryEn: project.summaryEn,
+        bodyId: project.bodyId,
+        bodyEn: project.bodyEn,
+        year: project.year,
+        websiteUrl: project.websiteUrl,
+        appStoreUrl: project.appStoreUrl,
+        playStoreUrl: project.playStoreUrl,
+        screenshotUrl: project.screenshotUrl,
+        galleryUrls: project.galleryUrls ?? [],
+        clientId: clientId ?? null,
+        categories: { set: categoryConnect },
+        techStackItems: { set: techStackConnect },
+        status: PublishStatus.PUBLISHED,
+        featured: project.featured,
+        sortOrder: project.sortOrder,
+      },
+      create: {
+        slug: project.slug,
+        titleId: project.titleId,
+        titleEn: project.titleEn,
+        summaryId: project.summaryId,
+        summaryEn: project.summaryEn,
+        bodyId: project.bodyId,
+        bodyEn: project.bodyEn,
+        year: project.year,
+        websiteUrl: project.websiteUrl,
+        appStoreUrl: project.appStoreUrl,
+        playStoreUrl: project.playStoreUrl,
+        screenshotUrl: project.screenshotUrl,
+        galleryUrls: project.galleryUrls ?? [],
+        clientId: clientId ?? null,
+        categories: { connect: categoryConnect },
+        techStackItems: { connect: techStackConnect },
+        status: PublishStatus.PUBLISHED,
+        featured: project.featured,
+        sortOrder: project.sortOrder,
+        publishedAt: new Date(),
+        createdById: admin.id,
+      },
+    });
+  }
 
   await prisma.charityProject.upsert({
     where: { slug: "community-support-2026" },

@@ -93,7 +93,8 @@
     "empty": "No projects yet.",
     "website": "Website",
     "appStore": "App Store",
-    "playStore": "Play Store"
+    "playStore": "Play Store",
+    "otherProjects": "Other Projects"
   },
   "charity": {
     "title": "Charity",

@@ -130,16 +130,24 @@ export function FormFile({
   name,
   accept,
   hint,
+  multiple,
 }: {
   label: string;
   name: string;
   accept?: string;
   hint?: string;
+  multiple?: boolean;
 }) {
   return (
     <div className="space-y-2">
       <Label htmlFor={name}>{label}</Label>
-      <Input id={name} name={name} type="file" accept={accept} />
+      <Input
+        id={name}
+        name={name}
+        type="file"
+        accept={accept}
+        multiple={multiple}
+      />
       {hint && <p className="text-xs text-muted-foreground">{hint}</p>}
     </div>
   );
