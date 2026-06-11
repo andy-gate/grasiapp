@@ -15,6 +15,8 @@ import {
   UserCircle,
   Layers,
   Building2,
+  Info,
+  IdCard,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { BrandLogo } from "@/components/marketing/brand-logo";
@@ -69,6 +71,18 @@ const navItems: NavItem[] = [
     label: "Halaman CMS",
     icon: FileText,
     permission: "page.manage",
+  },
+  {
+    href: "/admin/about",
+    label: "Tentang Kami",
+    icon: Info,
+    permission: "about.manage",
+  },
+  {
+    href: "/admin/team",
+    label: "Tim",
+    icon: IdCard,
+    permission: "about.manage",
   },
   {
     href: "/admin/messages",

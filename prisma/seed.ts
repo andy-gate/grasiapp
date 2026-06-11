@@ -20,6 +20,7 @@ const PERMISSIONS = [
   { slug: "charity.manage", name: "Kelola charity" },
   { slug: "translator.manage", name: "Kelola layanan translator" },
   { slug: "page.manage", name: "Kelola halaman CMS" },
+  { slug: "about.manage", name: "Kelola halaman tentang kami" },
   { slug: "contact.read", name: "Baca pesan kontak" },
   { slug: "bio_page.access", name: "Akses bio page sendiri" },
   { slug: "bio_page.manage", name: "Kelola semua bio page" },
@@ -49,6 +50,7 @@ const ROLES: Record<
       "charity.manage",
       "translator.manage",
       "page.manage",
+      "about.manage",
       "contact.read",
     ],
   },
@@ -560,6 +562,65 @@ async function main() {
       },
     },
   });
+
+  const aboutSetting = {
+    visionId:
+      "Menjadi partner teknologi terpercaya yang membantu bisnis bertumbuh melalui solusi digital yang berkualitas.",
+    visionEn:
+      "To become a trusted technology partner that helps businesses grow through quality digital solutions.",
+    missionId:
+      "1. Menghadirkan software yang skalabel, aman, dan mudah dirawat.\n2. Mengutamakan komunikasi yang transparan dengan klien.\n3. Terus belajar dan mengadopsi teknologi terbaik.",
+    missionEn:
+      "1. Deliver scalable, secure, and maintainable software.\n2. Prioritize transparent communication with clients.\n3. Keep learning and adopting the best technologies.",
+    foundedYear: 2016,
+    values: [
+      {
+        titleId: "Integritas",
+        titleEn: "Integrity",
+        descId: "Jujur dan transparan dalam setiap kerja sama.",
+        descEn: "Honest and transparent in every collaboration.",
+      },
+      {
+        titleId: "Kualitas",
+        titleEn: "Quality",
+        descId: "Standar tinggi dari perencanaan hingga production.",
+        descEn: "High standards from planning to production.",
+      },
+      {
+        titleId: "Kolaborasi",
+        titleEn: "Collaboration",
+        descId: "Bekerja bersama klien sebagai satu tim.",
+        descEn: "Working together with clients as one team.",
+      },
+    ],
+  };
+
+  await prisma.siteSetting.upsert({
+    where: { key: "about" },
+    update: { value: aboutSetting },
+    create: { key: "about", value: aboutSetting },
+  });
+
+  const teamMembers = [
+    { name: "Andy Yohanes", roleId: "Founder & CEO", roleEn: "Founder & CEO", sortOrder: 0 },
+    { name: "Budi Santoso", roleId: "Lead Engineer", roleEn: "Lead Engineer", sortOrder: 1 },
+    { name: "Citra Lestari", roleId: "Desainer UI/UX", roleEn: "UI/UX Designer", sortOrder: 2 },
+    { name: "Dewi Anggraini", roleId: "Manajer Proyek", roleEn: "Project Manager", sortOrder: 3 },
+  ];
+
+  for (const member of teamMembers) {
+    const existing = await prisma.teamMember.findFirst({
+      where: { name: member.name },
+    });
+    if (existing) {
+      await prisma.teamMember.update({
+        where: { id: existing.id },
+        data: member,
+      });
+    } else {
+      await prisma.teamMember.create({ data: member });
+    }
+  }
 
   console.log("Seed selesai.");
   console.log("Login admin: admin / admin@grasiapp.local — password: admin123");

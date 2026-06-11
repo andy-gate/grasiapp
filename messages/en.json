@@ -96,6 +96,18 @@
     "playStore": "Play Store",
     "otherProjects": "Other Projects"
   },
+  "about": {
+    "vision": "Vision",
+    "mission": "Mission",
+    "statsYears": "Years of Experience",
+    "statsProjects": "Projects Delivered",
+    "statsClients": "Clients & Partners",
+    "statsCharity": "Charity Programs",
+    "valuesTitle": "Our Values",
+    "valuesSubtitle": "Principles we uphold in everything we do",
+    "teamTitle": "Our Team",
+    "teamSubtitle": "The people behind Grasia Prima Perfekta"
+  },
   "charity": {
     "title": "Charity",
     "empty": "No programs yet.",

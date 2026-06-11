@@ -96,6 +96,18 @@
     "playStore": "Play Store",
     "otherProjects": "Proyek Lainnya"
   },
+  "about": {
+    "vision": "Visi",
+    "mission": "Misi",
+    "statsYears": "Tahun Pengalaman",
+    "statsProjects": "Proyek Selesai",
+    "statsClients": "Klien & Partner",
+    "statsCharity": "Program Charity",
+    "valuesTitle": "Nilai Kami",
+    "valuesSubtitle": "Prinsip yang kami pegang dalam setiap pekerjaan",
+    "teamTitle": "Tim Kami",
+    "teamSubtitle": "Orang-orang di balik Grasia Prima Perfekta"
+  },
   "charity": {
     "title": "Charity",
     "empty": "Belum ada program.",

@@ -245,6 +245,20 @@ model CharityProject {
   @@index([status, featured])
 }
 
+model TeamMember {
+  id        String   @id @default(cuid())
+  name      String
+  roleId    String
+  roleEn    String
+  photoUrl  String?
+  sortOrder Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([isActive, sortOrder])
+}
+
 model TranslatorService {
   id              String        @id @default(cuid())
   slug            String        @unique
