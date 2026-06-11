@@ -98,7 +98,10 @@
   },
   "charity": {
     "title": "Charity",
-    "empty": "No programs yet."
+    "empty": "No programs yet.",
+    "beneficiary": "Beneficiary",
+    "location": "Location",
+    "otherPrograms": "Other Programs"
   },
   "translator": {
     "title": "Translation Services",

@@ -224,6 +224,8 @@ model CharityProject {
   bodyEn        String?       @db.Text
   coverMediaId  String?
   coverMedia    Media?        @relation("CharityCover", fields: [coverMediaId], references: [id], onDelete: SetNull)
+  screenshotUrl String?
+  galleryUrls   String[]      @default([])
   beneficiary   String?
   location      String?
   donationUrl   String?

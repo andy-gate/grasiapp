@@ -131,7 +131,7 @@ export function ItProjectForm({
               <Image
                 key={`${url}-${idx}`}
                 src={url}
-                alt={`${project.titleId} screenshot ${idx + 1}`}
+                alt={`${project?.titleId} screenshot ${idx + 1}`}
                 width={960}
                 height={540}
                 className="h-40 w-full rounded-md border border-border object-cover"

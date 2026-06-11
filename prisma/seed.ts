@@ -398,23 +398,93 @@ async function main() {
     });
   }
 
-  await prisma.charityProject.upsert({
-    where: { slug: "community-support-2026" },
-    update: {},
-    create: {
+  const charityProjects = [
+    {
       slug: "community-support-2026",
       titleId: "Dukungan Komunitas 2026",
       titleEn: "Community Support 2026",
-      summaryId: "Program bantuan untuk komunitas lokal.",
-      summaryEn: "Support program for local communities.",
+      summaryId:
+        "Program bantuan untuk komunitas lokal berupa sembako, pendidikan, dan kesehatan dasar.",
+      summaryEn:
+        "Support program for local communities covering food aid, education, and basic health.",
+      bodyId:
+        "<p>Dummy program charity untuk preview layout detail: gallery mosaic, info penerima manfaat, dan tombol donasi.</p>",
+      bodyEn:
+        "<p>Dummy charity program to preview the detail layout: mosaic gallery, beneficiary info, and donate button.</p>",
       beneficiary: "Komunitas lokal",
-      location: "Indonesia",
-      status: PublishStatus.PUBLISHED,
+      location: "Surabaya, Indonesia",
+      donationUrl: "https://example.com/donate/community-support",
+      goalAmount: 50000000,
+      raisedAmount: 32500000,
       featured: true,
-      publishedAt: new Date(),
-      createdById: admin.id,
+      sortOrder: 0,
+      screenshotUrl: "/client/gki_damai.png",
+      galleryUrls: [
+        "/client/gki_damai.png",
+        "/client/pmk_its.png",
+        "/client/msn.png",
+        "/client/pemkot_ambon.png",
+        "/client/its.png",
+        "/client/unair.png",
+      ],
     },
-  });
+    {
+      slug: "scholarship-fund",
+      titleId: "Beasiswa Anak Bangsa",
+      titleEn: "Scholarship Fund",
+      summaryId:
+        "Bantuan biaya pendidikan untuk pelajar berprestasi dari keluarga prasejahtera.",
+      summaryEn:
+        "Tuition support for high-achieving students from underprivileged families.",
+      bodyId:
+        "<p>Dummy program beasiswa untuk melihat variasi kartu list charity dengan progress donasi.</p>",
+      bodyEn:
+        "<p>Dummy scholarship program to preview charity list cards with donation progress.</p>",
+      beneficiary: "Pelajar prasejahtera",
+      location: "Jawa Timur, Indonesia",
+      donationUrl: "https://example.com/donate/scholarship",
+      goalAmount: 100000000,
+      raisedAmount: 45000000,
+      featured: false,
+      sortOrder: 1,
+      screenshotUrl: "/client/its.png",
+      galleryUrls: ["/client/its.png", "/client/unair.png", "/client/pmk_its.png"],
+    },
+    {
+      slug: "disaster-relief",
+      titleId: "Tanggap Bencana",
+      titleEn: "Disaster Relief",
+      summaryId:
+        "Penyaluran bantuan darurat untuk korban bencana alam di wilayah terdampak.",
+      summaryEn:
+        "Emergency aid distribution for natural disaster victims in affected areas.",
+      bodyId:
+        "<p>Dummy program tanggap bencana tanpa target donasi untuk menguji layout tanpa progress bar.</p>",
+      bodyEn:
+        "<p>Dummy disaster relief program without a donation goal to test the layout without a progress bar.</p>",
+      beneficiary: "Korban bencana",
+      location: "Indonesia",
+      featured: false,
+      sortOrder: 2,
+      screenshotUrl: "/client/pemkot_ambon.png",
+      galleryUrls: ["/client/pemkot_ambon.png", "/client/kemendesa.png"],
+    },
+  ];
+
+  for (const program of charityProjects) {
+    const { slug, ...data } = program;
+    await prisma.charityProject.upsert({
+      where: { slug },
+      update: { ...data, status: PublishStatus.PUBLISHED },
+      create: {
+        slug,
+        ...data,
+        status: PublishStatus.PUBLISHED,
+        publishedAt: new Date(),
+        createdById: admin.id,
+      },
+    });
+  }
 
   await prisma.translatorService.upsert({
     where: { slug: "document-translation" },

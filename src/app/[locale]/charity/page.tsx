@@ -1,9 +1,11 @@
 import { getTranslations, setRequestLocale } from "next-intl/server";
+import Image from "next/image";
 import { Link } from "@/i18n/navigation";
 import { prisma } from "@/lib/db";
 import { publishedWhere, pickLocaleField } from "@/lib/content";
 import type { Locale } from "@/i18n/routing";
-import { MarketingCard } from "@/components/marketing/marketing-card";
+import { Badge } from "@/components/ui/badge";
+import { MapPin, HeartHandshake } from "lucide-react";
 
 export default async function CharityPage({
   params,
@@ -21,23 +23,58 @@ export default async function CharityPage({
   });
 
   return (
-    <div className="mx-auto max-w-6xl px-4 py-12">
+    <div className="mx-auto max-w-5xl px-4 py-12">
       <h1 className="marketing-page-title">{t("title")}</h1>
       {projects.length === 0 ? (
         <p className="mt-6 marketing-muted">{t("empty")}</p>
       ) : (
-        <div className="mt-8 grid gap-6 md:grid-cols-2">
+        <div className="mt-8 flex flex-col gap-6">
           {projects.map((p) => (
-            <MarketingCard key={p.id}>
-              <h2 className="text-lg font-semibold text-white">
-                <Link href={`/charity/${p.slug}`} className="marketing-link">
+            <Link
+              key={p.id}
+              href={`/charity/${p.slug}`}
+              className="group flex flex-col overflow-hidden rounded-xl border border-white/10 bg-[#0d1117]/60 backdrop-blur transition-all hover:border-brand-blue/40 hover:shadow-xl hover:shadow-brand-blue/10 sm:flex-row"
+            >
+              {p.screenshotUrl && (
+                <div className="aspect-video w-full shrink-0 overflow-hidden bg-black/20 sm:w-72 sm:self-stretch md:w-80">
+                  <Image
+                    src={p.screenshotUrl}
+                    alt={pickLocaleField(p, "title", loc)}
+                    width={960}
+                    height={540}
+                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-[1.03]"
+                  />
+                </div>
+              )}
+              <div className="flex flex-1 flex-col justify-center p-6">
+                <div className="flex flex-wrap gap-2">
+                  {p.beneficiary && (
+                    <Badge
+                      variant="outline"
+                      className="border-brand-blue/30 text-brand-blue-light"
+                    >
+                      <HeartHandshake className="size-3" />
+                      {p.beneficiary}
+                    </Badge>
+                  )}
+                  {p.location && (
+                    <Badge
+                      variant="outline"
+                      className="border-white/15 text-slate-400"
+                    >
+                      <MapPin className="size-3" />
+                      {p.location}
+                    </Badge>
+                  )}
+                </div>
+                <h2 className="mt-3 text-xl font-semibold text-white group-hover:text-brand-blue-light">
                   {pickLocaleField(p, "title", loc)}
-                </Link>
-              </h2>
-              <p className="mt-2 text-sm marketing-muted">
-                {pickLocaleField(p, "summary", loc)}
-              </p>
-            </MarketingCard>
+                </h2>
+                <p className="mt-2 line-clamp-3 text-sm marketing-muted">
+                  {pickLocaleField(p, "summary", loc)}
+                </p>
+              </div>
+            </Link>
           ))}
         </div>
       )}

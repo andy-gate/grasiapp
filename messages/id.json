@@ -98,7 +98,10 @@
   },
   "charity": {
     "title": "Charity",
-    "empty": "Belum ada program."
+    "empty": "Belum ada program.",
+    "beneficiary": "Penerima Manfaat",
+    "location": "Lokasi",
+    "otherPrograms": "Program Lainnya"
   },
   "translator": {
     "title": "Layanan Translator",

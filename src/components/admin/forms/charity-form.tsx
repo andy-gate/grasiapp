@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import {
   createCharityProject,
   updateCharityProject,
@@ -9,6 +10,7 @@ import {
   BilingualPair,
   FormCheckbox,
   FormField,
+  FormFile,
   PublishStatusField,
 } from "@/components/admin/form-fields";
 import type { CharityProject } from "@/generated/prisma/client";
@@ -58,6 +60,30 @@ export function CharityForm({ project }: { project?: CharityProject }) {
         name="donationUrl"
         defaultValue={project?.donationUrl ?? ""}
       />
+      <FormFile
+        label="Foto Kegiatan (Bisa Banyak)"
+        name="imageFiles"
+        accept="image/png,image/jpeg,image/webp"
+        multiple
+        hint="Upload satu atau lebih foto (PNG/JPG/WEBP, maks 5MB per file). Jika diisi, gallery lama akan diganti."
+      />
+      {(project?.galleryUrls?.length ?? 0) > 0 && (
+        <div className="space-y-2">
+          <p className="text-sm font-medium">Preview gallery saat ini</p>
+          <div className="grid gap-3 sm:grid-cols-2">
+            {(project?.galleryUrls ?? []).map((url, idx) => (
+              <Image
+                key={`${url}-${idx}`}
+                src={url}
+                alt={`${project?.titleId} foto ${idx + 1}`}
+                width={960}
+                height={540}
+                className="h-40 w-full rounded-md border border-border object-cover"
+              />
+            ))}
+          </div>
+        </div>
+      )}
       <div className="grid gap-4 md:grid-cols-2">
         <FormField
           label="Target donasi"
