@@ -117,6 +117,17 @@
   },
   "translator": {
     "title": "Translation Services",
-    "empty": "No services yet."
+    "empty": "No services yet.",
+    "calcTitle": "Price Calculator",
+    "calcSubtitle": "Estimate the cost of translating your documents",
+    "calcService": "Service",
+    "calcSource": "Source Language",
+    "calcTarget": "Target Language",
+    "calcSpeed": "Turnaround Time",
+    "calcPages": "Number of Pages",
+    "calcEstimate": "Estimated Price",
+    "calcDisclaimer": "Initial estimate — the final price may vary based on document complexity.",
+    "calcOrder": "Order via WhatsApp",
+    "calcWaMessage": "Hello, I would like to order the {service} service ({pair}), {pages} pages, {speed} turnaround. Estimated price: {price}."
   }
 }

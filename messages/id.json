@@ -117,6 +117,17 @@
   },
   "translator": {
     "title": "Layanan Translator",
-    "empty": "Belum ada layanan."
+    "empty": "Belum ada layanan.",
+    "calcTitle": "Kalkulator Harga",
+    "calcSubtitle": "Hitung estimasi biaya terjemahan dokumen Anda",
+    "calcService": "Layanan",
+    "calcSource": "Bahasa Asal",
+    "calcTarget": "Bahasa Tujuan",
+    "calcSpeed": "Waktu Pengerjaan",
+    "calcPages": "Jumlah Halaman",
+    "calcEstimate": "Estimasi Harga",
+    "calcDisclaimer": "Estimasi awal — harga final dapat menyesuaikan kompleksitas dokumen.",
+    "calcOrder": "Pesan via WhatsApp",
+    "calcWaMessage": "Halo, saya ingin memesan layanan {service} ({pair}), {pages} halaman, waktu pengerjaan {speed}. Estimasi harga: {price}."
   }
 }

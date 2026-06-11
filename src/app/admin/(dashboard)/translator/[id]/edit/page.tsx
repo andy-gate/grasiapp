@@ -11,14 +11,36 @@ export default async function EditTranslatorPage({
 }) {
   await requirePermission("translator.manage");
   const { id } = await params;
-  const service = await prisma.translatorService.findUnique({ where: { id } });
+  const [service, languages] = await Promise.all([
+    prisma.translatorService.findUnique({
+      where: { id },
+      include: { rates: { orderBy: { sortOrder: "asc" } } },
+    }),
+    prisma.language.findMany({
+      where: { isActive: true },
+      orderBy: { sortOrder: "asc" },
+    }),
+  ]);
   if (!service) notFound();
+
+  const { rates, ...serviceData } = service;
 
   return (
     <div>
       <AdminPageHeader title="Edit Layanan Translator" />
       <div className="mt-6">
-        <TranslatorForm service={service} />
+        <TranslatorForm
+          service={serviceData}
+          rates={rates.map((rate) => ({
+            sourceLanguageId: rate.sourceLanguageId,
+            targetLanguageId: rate.targetLanguageId,
+            pricePerPage: Number(rate.pricePerPage),
+          }))}
+          languages={languages.map((lang) => ({
+            id: lang.id,
+            name: lang.nameId,
+          }))}
+        />
       </div>
     </div>
   );

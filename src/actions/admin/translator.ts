@@ -26,6 +26,23 @@ const schema = z.object({
   sortOrder: z.coerce.number().int().default(0),
 });
 
+const rateSchema = z.object({
+  sourceLanguageId: z.string().min(1, "Bahasa asal tarif wajib dipilih"),
+  targetLanguageId: z.string().min(1, "Bahasa tujuan tarif wajib dipilih"),
+  pricePerPage: z.coerce.number().positive("Harga per halaman harus > 0"),
+});
+
+function parseRates(formData: FormData) {
+  const raw = String(formData.get("ratesJson") ?? "[]");
+  let parsed: unknown;
+  try {
+    parsed = JSON.parse(raw);
+  } catch {
+    throw new Error("Data tarif tidak valid");
+  }
+  return z.array(rateSchema).parse(parsed);
+}
+
 function parseLangs(value: string) {
   return value
     .split(",")
@@ -68,6 +85,7 @@ export async function createTranslatorService(
   const session = await requirePermission("translator.manage");
   try {
     const parsed = parse(formData, session.user.id);
+    const rates = parseRates(formData);
     const { publishedAt, createdById, sourceLanguages, targetLanguages, ...rest } =
       parsed;
     await prisma.translatorService.create({
@@ -77,6 +95,9 @@ export async function createTranslatorService(
         targetLanguages,
         publishedAt,
         createdById,
+        rates: {
+          create: rates.map((rate, idx) => ({ ...rate, sortOrder: idx })),
+        },
       },
     });
     revalidatePath("/admin/translator");
@@ -97,6 +118,7 @@ export async function updateTranslatorService(
   const session = await requirePermission("translator.manage");
   try {
     const parsed = parse(formData, session.user.id);
+    const rates = parseRates(formData);
     const { publishedAt, createdById, sourceLanguages, targetLanguages, ...rest } =
       parsed;
     await prisma.translatorService.update({
@@ -107,6 +129,10 @@ export async function updateTranslatorService(
         targetLanguages,
         publishedAt:
           rest.status === "PUBLISHED" ? publishedAt ?? new Date() : null,
+        rates: {
+          deleteMany: {},
+          create: rates.map((rate, idx) => ({ ...rate, sortOrder: idx })),
+        },
       },
     });
     revalidatePath("/admin/translator");

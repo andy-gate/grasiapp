@@ -488,10 +488,29 @@ async function main() {
     });
   }
 
-  await prisma.translatorService.upsert({
-    where: { slug: "document-translation" },
-    update: {},
-    create: {
+  const languages = [
+    { code: "id", nameId: "Indonesia", nameEn: "Indonesian", sortOrder: 0 },
+    { code: "en", nameId: "Inggris", nameEn: "English", sortOrder: 1 },
+    { code: "zh", nameId: "Mandarin", nameEn: "Mandarin", sortOrder: 2 },
+    { code: "ja", nameId: "Jepang", nameEn: "Japanese", sortOrder: 3 },
+  ];
+  const languageBycode = new Map<string, string>();
+  for (const language of languages) {
+    const saved = await prisma.language.upsert({
+      where: { code: language.code },
+      update: language,
+      create: language,
+    });
+    languageBycode.set(language.code, saved.id);
+  }
+  const langId = (code: string) => {
+    const id = languageBycode.get(code);
+    if (!id) throw new Error(`Bahasa ${code} belum di-seed`);
+    return id;
+  };
+
+  const translatorServices = [
+    {
       slug: "document-translation",
       nameId: "Terjemahan Dokumen",
       nameEn: "Document Translation",
@@ -500,12 +519,114 @@ async function main() {
       sourceLanguages: ["id", "en"],
       targetLanguages: ["id", "en"],
       serviceType: "document",
-      pricingNoteId: "Hubungi kami untuk penawaran harga.",
-      pricingNoteEn: "Contact us for a quote.",
-      status: PublishStatus.PUBLISHED,
+      pricingNoteId: "Harga dihitung per halaman hasil terjemahan.",
+      pricingNoteEn: "Pricing is calculated per translated page.",
       featured: true,
-      publishedAt: new Date(),
-      createdById: admin.id,
+      rates: [
+        { source: "id", target: "en", pricePerPage: 75000 },
+        { source: "en", target: "id", pricePerPage: 65000 },
+      ],
+    },
+    {
+      slug: "sworn-translation",
+      nameId: "Terjemahan Tersumpah",
+      nameEn: "Sworn Translation",
+      descriptionId:
+        "Terjemahan resmi bersertifikat untuk dokumen legal seperti ijazah, akta, dan kontrak.",
+      descriptionEn:
+        "Certified translation for legal documents such as diplomas, certificates, and contracts.",
+      sourceLanguages: ["id", "en"],
+      targetLanguages: ["id", "en"],
+      serviceType: "sworn",
+      pricingNoteId: "Termasuk cap dan tanda tangan penerjemah tersumpah.",
+      pricingNoteEn: "Includes the sworn translator's stamp and signature.",
+      featured: false,
+      rates: [
+        { source: "id", target: "en", pricePerPage: 125000 },
+        { source: "en", target: "id", pricePerPage: 110000 },
+      ],
+    },
+  ];
+
+  for (const { rates, ...service } of translatorServices) {
+    const saved = await prisma.translatorService.upsert({
+      where: { slug: service.slug },
+      update: { ...service, status: PublishStatus.PUBLISHED },
+      create: {
+        ...service,
+        status: PublishStatus.PUBLISHED,
+        publishedAt: new Date(),
+        createdById: admin.id,
+      },
+    });
+    await prisma.translatorRate.deleteMany({ where: { serviceId: saved.id } });
+    await prisma.translatorRate.createMany({
+      data: rates.map((rate, idx) => ({
+        serviceId: saved.id,
+        sourceLanguageId: langId(rate.source),
+        targetLanguageId: langId(rate.target),
+        pricePerPage: rate.pricePerPage,
+        sortOrder: idx,
+      })),
+    });
+  }
+
+  await prisma.siteSetting.upsert({
+    where: { key: "translatorSpeeds" },
+    update: {
+      value: {
+        packages: [
+          {
+            nameId: "Standar",
+            nameEn: "Standard",
+            multiplier: 1,
+            noteId: "4-6 hari kerja",
+            noteEn: "4-6 working days",
+          },
+          {
+            nameId: "Reguler",
+            nameEn: "Regular",
+            multiplier: 1.25,
+            noteId: "2-3 hari kerja",
+            noteEn: "2-3 working days",
+          },
+          {
+            nameId: "Express",
+            nameEn: "Express",
+            multiplier: 1.5,
+            noteId: "1-2 hari kerja",
+            noteEn: "1-2 working days",
+          },
+        ],
+      },
+    },
+    create: {
+      key: "translatorSpeeds",
+      value: {
+        packages: [
+          {
+            nameId: "Standar",
+            nameEn: "Standard",
+            multiplier: 1,
+            noteId: "4-6 hari kerja",
+            noteEn: "4-6 working days",
+          },
+          {
+            nameId: "Reguler",
+            nameEn: "Regular",
+            multiplier: 1.25,
+            noteId: "2-3 hari kerja",
+            noteEn: "2-3 working days",
+          },
+          {
+            nameId: "Express",
+            nameEn: "Express",
+            multiplier: 1.5,
+            noteId: "1-2 hari kerja",
+            noteEn: "1-2 working days",
+          },
+        ],
+      },
     },
   });
 
