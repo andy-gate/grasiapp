@@ -20,17 +20,17 @@ export async function CtaSection() {
           }}
         />
         <div className="relative">
-          <h2 className="bg-gradient-to-r from-white via-brand-blue-light to-brand-violet bg-clip-text text-2xl font-semibold tracking-tight text-transparent md:text-3xl">
+          <h2 className="bg-gradient-to-r from-(--m-strong) via-brand-blue-light to-brand-violet bg-clip-text text-2xl font-semibold tracking-tight text-transparent md:text-3xl">
             {t("ctaTitle")}
           </h2>
-          <p className="mx-auto mt-3 max-w-lg text-slate-300">
+          <p className="mx-auto mt-3 max-w-lg text-(--m-soft-text)">
             {t("ctaDesc")}
           </p>
           <Link
             href="/contact"
             className={cn(
               buttonVariants(),
-              "mt-8 inline-flex h-11 border-0 bg-white px-8 text-[#0a0a0a] hover:bg-slate-100",
+              "mt-8 inline-flex h-11 border-0 bg-(--m-strong) px-8 text-(--m-bg) hover:opacity-90",
             )}
           >
             {tc("contactUs")}

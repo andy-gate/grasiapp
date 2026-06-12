@@ -19,6 +19,7 @@ import {
   IdCard,
   Globe,
   Timer,
+  Settings,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { BrandLogo } from "@/components/marketing/brand-logo";
@@ -150,6 +151,12 @@ const navGroups: NavGroup[] = [
         label: "Pesan Kontak",
         icon: Mail,
         permission: "contact.read",
+      },
+      {
+        href: "/admin/settings",
+        label: "Info Perusahaan",
+        icon: Settings,
+        permission: "setting.manage",
       },
       {
         href: "/admin/users",

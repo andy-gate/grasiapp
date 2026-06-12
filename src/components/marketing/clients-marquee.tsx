@@ -40,7 +40,7 @@ function ClientCard({
       className="h-28 w-64 object-contain opacity-80 grayscale transition-transform duration-300 ease-out will-change-transform select-none group-hover:scale-150 group-hover:opacity-100 group-hover:grayscale-0"
     />
   ) : (
-    <span className="block w-64 text-center text-base font-medium text-slate-400 transition-transform duration-300 ease-out select-none group-hover:scale-150 group-hover:text-brand-blue-light">
+    <span className="block w-64 text-center text-base font-medium text-(--m-muted) transition-transform duration-300 ease-out select-none group-hover:scale-150 group-hover:text-(--m-accent)">
       {client.name}
     </span>
   );

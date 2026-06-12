@@ -72,7 +72,7 @@ export default async function TranslatorPage({
         <div className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {services.map((s) => (
             <MarketingCard key={s.id}>
-              <h2 className="text-lg font-semibold text-white">
+              <h2 className="text-lg font-semibold text-(--m-strong)">
                 {pickLocaleField(s, "name", loc)}
               </h2>
               <p className="mt-2 text-sm marketing-muted">

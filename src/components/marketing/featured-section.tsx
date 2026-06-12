@@ -25,7 +25,7 @@ export async function FeaturedSection({ locale }: { locale: Locale }) {
   if (itProjects.length === 0) return null;
 
   return (
-    <section className="border-y border-white/5 bg-white/2 px-4 py-20">
+    <section className="border-y border-(--m-divider) bg-(--m-surface) px-4 py-20">
       <div className="mx-auto max-w-6xl">
         <Reveal>
           <SectionHeading
@@ -40,10 +40,10 @@ export async function FeaturedSection({ locale }: { locale: Locale }) {
             <StaggerItem key={p.id}>
               <Link
                 href={`/it/${p.slug}`}
-                className="group block h-full rounded-xl border border-white/10 bg-[#0d1117]/60 p-6 backdrop-blur transition-all hover:border-brand-blue/40 hover:shadow-xl hover:shadow-brand-blue/10"
+                className="group block h-full rounded-xl border border-(--m-border) bg-(--m-card) p-6 backdrop-blur transition-all hover:border-brand-blue/40 hover:shadow-xl hover:shadow-brand-blue/10"
               >
                 {p.screenshotUrl && (
-                  <div className="mb-5 aspect-video overflow-hidden rounded-lg border border-white/10 bg-black/20">
+                  <div className="mb-5 aspect-video overflow-hidden rounded-lg border border-(--m-border) bg-(--m-media-bg)">
                     <Image
                       src={p.screenshotUrl}
                       alt={pickLocaleField(p, "title", locale)}
@@ -59,19 +59,19 @@ export async function FeaturedSection({ locale }: { locale: Locale }) {
                     <Badge
                       key={cat.id}
                       variant="secondary"
-                      className="border-brand-blue/20 bg-brand-blue/10 text-brand-blue-light"
+                      className="border-brand-blue/20 bg-brand-blue/10 text-(--m-accent)"
                     >
                       {pickLocaleField(cat, "name", locale)}
                     </Badge>
                   ))}
                 </div>
-                <h3 className="mt-3 text-lg font-semibold text-white group-hover:text-brand-blue-light">
+                <h3 className="mt-3 text-lg font-semibold text-(--m-strong) group-hover:text-(--m-accent)">
                   {pickLocaleField(p, "title", locale)}
                 </h3>
-                <p className="mt-2 line-clamp-2 text-sm text-slate-400">
+                <p className="mt-2 line-clamp-2 text-sm text-(--m-muted)">
                   {pickLocaleField(p, "summary", locale)}
                 </p>
-                <span className="mt-4 inline-block text-sm text-brand-blue-light">
+                <span className="mt-4 inline-block text-sm text-(--m-accent)">
                   {tc("readMore")} →
                 </span>
               </Link>
@@ -83,7 +83,7 @@ export async function FeaturedSection({ locale }: { locale: Locale }) {
             href="/it"
             className={cn(
               buttonVariants({ variant: "outline" }),
-              "border-white/20 bg-transparent text-white hover:bg-white/10 hover:text-white",
+              "border-(--m-border-strong) bg-transparent text-(--m-strong) hover:bg-(--m-soft-strong) hover:text-(--m-strong)",
             )}
           >
             {t("ctaIt")}

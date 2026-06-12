@@ -60,7 +60,7 @@ export function CharityGallery({
           type="button"
           onClick={() => setLightboxIndex(0)}
           className={cn(
-            "group relative aspect-video cursor-zoom-in overflow-hidden rounded-xl border border-white/10 bg-black/20",
+            "group relative aspect-video cursor-zoom-in overflow-hidden rounded-xl border border-(--m-border) bg-(--m-media-bg)",
             rest.length > 0 && "md:col-span-2 md:aspect-4/3",
           )}
           aria-label={`${altBase} foto 1`}
@@ -85,7 +85,7 @@ export function CharityGallery({
                   key={`${image}-${realIdx}`}
                   type="button"
                   onClick={() => setLightboxIndex(realIdx)}
-                  className="group relative aspect-video cursor-zoom-in overflow-hidden rounded-lg border border-white/10 bg-black/20"
+                  className="group relative aspect-video cursor-zoom-in overflow-hidden rounded-lg border border-(--m-border) bg-(--m-media-bg)"
                   aria-label={`${altBase} foto ${realIdx + 1}`}
                 >
                   <Image

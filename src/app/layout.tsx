@@ -44,12 +44,19 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Set tema marketing sebelum hydration agar tidak flash
+  const themeInitScript = `(function(){try{var t=localStorage.getItem("marketing-theme");if(t==="light"||(t!=="dark"&&window.matchMedia("(prefers-color-scheme: light)").matches)){document.documentElement.classList.add("marketing-light")}}catch(e){}})()`;
+
   return (
     <html
       lang="id"
       className={`${plusJakartaSans.variable} ${geistMono.variable} h-full`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full font-sans antialiased">{children}</body>
+      <body className="min-h-full font-sans antialiased">
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+        {children}
+      </body>
     </html>
   );
 }

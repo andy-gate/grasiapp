@@ -30,7 +30,7 @@ export function SectionHeading({
     >
       <div
         className={cn(
-          "inline-flex items-center gap-2 rounded-full border border-brand-blue/30 bg-brand-blue/10 px-4 py-1.5 text-sm font-medium text-brand-blue-light",
+          "inline-flex items-center gap-2 rounded-full border border-brand-blue/30 bg-brand-blue/10 px-4 py-1.5 text-sm font-medium text-(--m-accent)",
           align === "center" && "mx-auto",
         )}
       >
@@ -41,8 +41,8 @@ export function SectionHeading({
         className={cn(
           "text-3xl font-semibold tracking-tight md:text-4xl lg:text-5xl",
           gradient
-            ? "bg-gradient-to-r from-white via-brand-blue-light to-brand-violet bg-clip-text text-transparent"
-            : "text-white",
+            ? "bg-gradient-to-r from-(--m-strong) via-brand-blue-light to-brand-violet bg-clip-text text-transparent"
+            : "text-(--m-strong)",
         )}
       >
         {heading}
@@ -50,7 +50,7 @@ export function SectionHeading({
       {description && (
         <p
           className={cn(
-            "max-w-2xl text-base text-slate-400 md:text-lg",
+            "max-w-2xl text-base text-(--m-muted) md:text-lg",
             align === "center" && "mx-auto",
           )}
         >

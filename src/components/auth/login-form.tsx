@@ -50,12 +50,12 @@ export function LoginForm({
   return (
     <div className="flex w-full max-w-2xl flex-col items-center justify-center px-6 py-0">
       <BrandLogo size="lg" className="mb-8 md:mb-10 md:scale-110" />
-      <Card className="w-full max-w-xl border-white/10 bg-[#0d1117]/80 text-white backdrop-blur-xl">
+      <Card className="w-full max-w-xl border-(--m-border) bg-(--m-card-strong) text-(--m-strong) backdrop-blur-xl">
         <CardHeader className="space-y-2 p-8 pb-4">
-          <CardTitle className="text-2xl text-white md:text-3xl">
+          <CardTitle className="text-2xl text-(--m-strong) md:text-3xl">
             {title ?? t("title")}
           </CardTitle>
-          <CardDescription className="text-base text-slate-400">
+          <CardDescription className="text-base text-(--m-muted)">
             {description ?? t("description")}
           </CardDescription>
         </CardHeader>

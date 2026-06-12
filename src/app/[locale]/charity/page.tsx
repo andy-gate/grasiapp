@@ -33,10 +33,10 @@ export default async function CharityPage({
             <Link
               key={p.id}
               href={`/charity/${p.slug}`}
-              className="group flex flex-col overflow-hidden rounded-xl border border-white/10 bg-[#0d1117]/60 backdrop-blur transition-all hover:border-brand-blue/40 hover:shadow-xl hover:shadow-brand-blue/10 sm:flex-row"
+              className="group flex flex-col overflow-hidden rounded-xl border border-(--m-border) bg-(--m-card) backdrop-blur transition-all hover:border-brand-blue/40 hover:shadow-xl hover:shadow-brand-blue/10 sm:flex-row"
             >
               {p.screenshotUrl && (
-                <div className="aspect-video w-full shrink-0 overflow-hidden bg-black/20 sm:w-72 sm:self-stretch md:w-80">
+                <div className="aspect-video w-full shrink-0 overflow-hidden bg-(--m-media-bg) sm:w-72 sm:self-stretch md:w-80">
                   <Image
                     src={p.screenshotUrl}
                     alt={pickLocaleField(p, "title", loc)}
@@ -51,7 +51,7 @@ export default async function CharityPage({
                   {p.beneficiary && (
                     <Badge
                       variant="outline"
-                      className="border-brand-blue/30 text-brand-blue-light"
+                      className="border-brand-blue/30 text-(--m-accent)"
                     >
                       <HeartHandshake className="size-3" />
                       {p.beneficiary}
@@ -60,14 +60,14 @@ export default async function CharityPage({
                   {p.location && (
                     <Badge
                       variant="outline"
-                      className="border-white/15 text-slate-400"
+                      className="border-(--m-border-strong) text-(--m-muted)"
                     >
                       <MapPin className="size-3" />
                       {p.location}
                     </Badge>
                   )}
                 </div>
-                <h2 className="mt-3 text-xl font-semibold text-white group-hover:text-brand-blue-light">
+                <h2 className="mt-3 text-xl font-semibold text-(--m-strong) group-hover:text-(--m-accent)">
                   {pickLocaleField(p, "title", loc)}
                 </h2>
                 <p className="mt-2 line-clamp-3 text-sm marketing-muted">

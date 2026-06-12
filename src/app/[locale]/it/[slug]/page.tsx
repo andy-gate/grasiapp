@@ -73,7 +73,7 @@ export default async function ItProjectDetailPage({
         {project.categories.map((cat) => (
           <Badge
             key={cat.id}
-            className="border-brand-blue/30 bg-brand-blue/20 text-brand-blue-light"
+            className="border-brand-blue/30 bg-brand-blue/20 text-(--m-accent)"
           >
             {pickLocaleField(cat, "name", loc)}
           </Badge>
@@ -91,7 +91,7 @@ export default async function ItProjectDetailPage({
             <Badge
               key={item.id}
               variant="secondary"
-              className="border-brand-blue/20 bg-brand-blue/10 font-mono text-brand-blue-light"
+              className="border-brand-blue/20 bg-brand-blue/10 font-mono text-(--m-accent)"
             >
               {pickLocaleField(item, "name", loc)}
             </Badge>
@@ -122,7 +122,7 @@ export default async function ItProjectDetailPage({
               rel="noopener noreferrer"
               className={cn(
                 buttonVariants({ size: "lg" }),
-                "h-12 border border-white/10 bg-white/5 px-5 text-white backdrop-blur transition-colors hover:border-brand-blue/40 hover:bg-brand-blue/20 hover:text-brand-blue-light",
+                "h-12 border border-(--m-border) bg-(--m-soft) px-5 text-(--m-strong) backdrop-blur transition-colors hover:border-brand-blue/40 hover:bg-brand-blue/20 hover:text-(--m-accent)",
               )}
             >
               <Globe className="size-4" />
@@ -151,8 +151,8 @@ export default async function ItProjectDetailPage({
       )}
 
       {otherProjects.length > 0 && (
-        <section className="mt-16 border-t border-white/10 pt-10">
-          <h2 className="text-xl font-semibold text-white">
+        <section className="mt-16 border-t border-(--m-border) pt-10">
+          <h2 className="text-xl font-semibold text-(--m-strong)">
             {t("otherProjects")}
           </h2>
           <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -160,7 +160,7 @@ export default async function ItProjectDetailPage({
               <MarketingCard key={p.id}>
                 {p.screenshotUrl && (
                   <Link href={`/it/${p.slug}`} className="block">
-                    <div className="mb-4 aspect-video overflow-hidden rounded-lg border border-white/10 bg-black/20">
+                    <div className="mb-4 aspect-video overflow-hidden rounded-lg border border-(--m-border) bg-(--m-media-bg)">
                       <Image
                         src={p.screenshotUrl}
                         alt={pickLocaleField(p, "title", loc)}
@@ -176,13 +176,13 @@ export default async function ItProjectDetailPage({
                     <Badge
                       key={cat.id}
                       variant="outline"
-                      className="border-brand-blue/30 text-brand-blue-light"
+                      className="border-brand-blue/30 text-(--m-accent)"
                     >
                       {pickLocaleField(cat, "name", loc)}
                     </Badge>
                   ))}
                 </div>
-                <h3 className="mt-3 text-base font-semibold text-white">
+                <h3 className="mt-3 text-base font-semibold text-(--m-strong)">
                   <Link href={`/it/${p.slug}`} className="marketing-link">
                     {pickLocaleField(p, "title", loc)}
                   </Link>

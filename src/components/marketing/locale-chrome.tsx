@@ -14,7 +14,7 @@ export function LocaleChrome({ children, header, footer }: LocaleChromeProps) {
   const isLoginRoute = pathname === "/login";
 
   return (
-    <div className="marketing-theme flex min-h-screen flex-col bg-black text-slate-100">
+    <div className="marketing-theme flex min-h-screen flex-col bg-(--m-bg) text-(--m-text)">
       {!isLoginRoute && header}
       <main
         className={

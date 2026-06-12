@@ -12,7 +12,7 @@ export function MarketingCard({
   return (
     <Tag
       className={cn(
-        "rounded-xl border border-white/10 bg-[#0d1117]/60 p-6 backdrop-blur transition-all hover:border-brand-blue/40 hover:shadow-xl hover:shadow-brand-blue/10",
+        "rounded-xl border border-(--m-border) bg-(--m-card) p-6 backdrop-blur transition-all hover:border-brand-blue/40 hover:shadow-xl hover:shadow-brand-blue/10",
         className,
       )}
     >

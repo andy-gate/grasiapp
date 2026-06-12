@@ -92,37 +92,95 @@
 }
 
 /* Public marketing pages — Grasia Prima Perfekta brand */
+/* Token tema: dark (default) — override light via html.marketing-light */
 .marketing-theme {
   --primary: #3b44fb;
   --primary-foreground: #ffffff;
   color-scheme: dark;
+
+  --m-bg: #000000;
+  --m-text: #f1f5f9;
+  --m-strong: #ffffff;
+  --m-soft-text: #cbd5e1;
+  --m-muted: #94a3b8;
+  --m-faint: #64748b;
+  --m-divider: rgba(255, 255, 255, 0.05);
+  --m-border: rgba(255, 255, 255, 0.1);
+  --m-border-strong: rgba(255, 255, 255, 0.2);
+  --m-card: rgba(13, 17, 23, 0.6);
+  --m-card-strong: rgba(13, 17, 23, 0.8);
+  --m-surface: rgba(255, 255, 255, 0.03);
+  --m-soft: rgba(255, 255, 255, 0.05);
+  --m-soft-strong: rgba(255, 255, 255, 0.1);
+  --m-accent: #6b9fff;
+  --m-media-bg: rgba(0, 0, 0, 0.2);
+  --m-header-bg: rgba(0, 0, 0, 0.7);
+}
+
+html.marketing-light .marketing-theme {
+  color-scheme: light;
+
+  --m-bg: #f6f8fb;
+  --m-text: #1e293b;
+  --m-strong: #0f172a;
+  --m-soft-text: #334155;
+  --m-muted: #64748b;
+  --m-faint: #94a3b8;
+  --m-divider: rgba(15, 23, 42, 0.06);
+  --m-border: rgba(15, 23, 42, 0.1);
+  --m-border-strong: rgba(15, 23, 42, 0.2);
+  --m-card: rgba(255, 255, 255, 0.75);
+  --m-card-strong: rgba(255, 255, 255, 0.95);
+  --m-surface: rgba(15, 23, 42, 0.03);
+  --m-soft: rgba(15, 23, 42, 0.05);
+  --m-soft-strong: rgba(15, 23, 42, 0.09);
+  --m-accent: #3b44fb;
+  --m-media-bg: rgba(15, 23, 42, 0.05);
+  --m-header-bg: rgba(255, 255, 255, 0.78);
 }
 
 .marketing-theme .prose {
-  --tw-prose-body: rgb(203 213 225);
-  --tw-prose-headings: rgb(255 255 255);
-  --tw-prose-links: #6b9fff;
+  --tw-prose-body: var(--m-soft-text);
+  --tw-prose-headings: var(--m-strong);
+  --tw-prose-links: var(--m-accent);
+  --tw-prose-bold: var(--m-strong);
+  --tw-prose-bullets: var(--m-muted);
+  --tw-prose-quotes: var(--m-soft-text);
+  --tw-prose-code: var(--m-strong);
 }
 
 .marketing-theme .marketing-page-title {
-  @apply text-3xl font-bold text-white;
+  @apply text-3xl font-bold;
+  color: var(--m-strong);
 }
 
 .marketing-theme .marketing-muted {
-  @apply text-slate-400;
+  color: var(--m-muted);
 }
 
 .marketing-theme .marketing-link {
-  @apply text-brand-blue-light transition-colors hover:text-white;
+  @apply transition-colors;
+  color: var(--m-accent);
+}
+
+.marketing-theme .marketing-link:hover {
+  color: var(--m-strong);
 }
 
 .marketing-theme input:not([type="hidden"]),
 .marketing-theme textarea {
-  @apply border-white/10 bg-white/5 text-white placeholder:text-slate-500;
+  border-color: var(--m-border);
+  background-color: var(--m-soft);
+  color: var(--m-strong);
+}
+
+.marketing-theme input::placeholder,
+.marketing-theme textarea::placeholder {
+  color: var(--m-faint);
 }
 
 .marketing-theme label {
-  @apply text-slate-300;
+  color: var(--m-soft-text);
 }
 
 @keyframes marketing-glow-pulse {

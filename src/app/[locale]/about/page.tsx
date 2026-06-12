@@ -72,7 +72,7 @@ export default async function AboutPage({
         {stats.map((stat, idx) => (
           <StaggerItem
             key={idx}
-            className="rounded-xl border border-white/10 bg-[#0d1117]/60 p-6 text-center backdrop-blur"
+            className="rounded-xl border border-(--m-border) bg-(--m-card) p-6 text-center backdrop-blur"
           >
             <p className="bg-linear-to-r from-brand-indigo to-brand-blue bg-clip-text text-3xl font-bold text-transparent md:text-4xl">
               {stat.value}
@@ -87,11 +87,11 @@ export default async function AboutPage({
         <div className="mt-14 grid gap-6 md:grid-cols-2">
           {vision && (
             <Reveal className="h-full">
-              <div className="h-full rounded-xl border border-white/10 bg-[#0d1117]/60 p-8 backdrop-blur">
+              <div className="h-full rounded-xl border border-(--m-border) bg-(--m-card) p-8 backdrop-blur">
                 <div className="flex size-11 items-center justify-center rounded-lg bg-brand-blue/15">
-                  <Eye className="size-5 text-brand-blue-light" />
+                  <Eye className="size-5 text-(--m-accent)" />
                 </div>
-                <h2 className="mt-4 text-xl font-semibold text-white">
+                <h2 className="mt-4 text-xl font-semibold text-(--m-strong)">
                   {t("vision")}
                 </h2>
                 <p className="mt-3 leading-relaxed marketing-muted">{vision}</p>
@@ -100,11 +100,11 @@ export default async function AboutPage({
           )}
           {mission && (
             <Reveal className="h-full" delay={0.1}>
-              <div className="h-full rounded-xl border border-white/10 bg-[#0d1117]/60 p-8 backdrop-blur">
+              <div className="h-full rounded-xl border border-(--m-border) bg-(--m-card) p-8 backdrop-blur">
                 <div className="flex size-11 items-center justify-center rounded-lg bg-brand-indigo/15">
-                  <Target className="size-5 text-brand-blue-light" />
+                  <Target className="size-5 text-(--m-accent)" />
                 </div>
-                <h2 className="mt-4 text-xl font-semibold text-white">
+                <h2 className="mt-4 text-xl font-semibold text-(--m-strong)">
                   {t("mission")}
                 </h2>
                 <p className="mt-3 whitespace-pre-line leading-relaxed marketing-muted">
@@ -120,7 +120,7 @@ export default async function AboutPage({
       {values.length > 0 && (
         <section className="mt-16">
           <Reveal className="text-center">
-            <h2 className="text-2xl font-semibold text-white md:text-3xl">
+            <h2 className="text-2xl font-semibold text-(--m-strong) md:text-3xl">
               {t("valuesTitle")}
             </h2>
             <p className="mt-2 marketing-muted">{t("valuesSubtitle")}</p>
@@ -129,13 +129,13 @@ export default async function AboutPage({
             {values.map((value, idx) => (
               <StaggerItem
                 key={idx}
-                className="rounded-xl border border-white/10 bg-[#0d1117]/60 p-6 backdrop-blur transition-colors hover:border-brand-blue/40"
+                className="rounded-xl border border-(--m-border) bg-(--m-card) p-6 backdrop-blur transition-colors hover:border-brand-blue/40"
               >
                 <div className="flex items-center gap-3">
                   <div className="flex size-9 items-center justify-center rounded-lg bg-brand-blue/15">
-                    <Sparkles className="size-4 text-brand-blue-light" />
+                    <Sparkles className="size-4 text-(--m-accent)" />
                   </div>
-                  <h3 className="font-semibold text-white">
+                  <h3 className="font-semibold text-(--m-strong)">
                     {tr(value.titleId, value.titleEn)}
                   </h3>
                 </div>
@@ -152,7 +152,7 @@ export default async function AboutPage({
       {team.length > 0 && (
         <section className="mt-16">
           <Reveal className="text-center">
-            <h2 className="text-2xl font-semibold text-white md:text-3xl">
+            <h2 className="text-2xl font-semibold text-(--m-strong) md:text-3xl">
               {t("teamTitle")}
             </h2>
             <p className="mt-2 marketing-muted">{t("teamSubtitle")}</p>
@@ -161,7 +161,7 @@ export default async function AboutPage({
             {team.map((member) => (
               <StaggerItem
                 key={member.id}
-                className="group rounded-xl border border-white/10 bg-[#0d1117]/60 p-6 text-center backdrop-blur transition-colors hover:border-brand-blue/40"
+                className="group rounded-xl border border-(--m-border) bg-(--m-card) p-6 text-center backdrop-blur transition-colors hover:border-brand-blue/40"
               >
                 {member.photoUrl ? (
                   <Image
@@ -169,10 +169,10 @@ export default async function AboutPage({
                     alt={member.name}
                     width={240}
                     height={240}
-                    className="mx-auto size-24 rounded-full border border-white/10 object-cover"
+                    className="mx-auto size-24 rounded-full border border-(--m-border) object-cover"
                   />
                 ) : (
-                  <div className="mx-auto flex size-24 items-center justify-center rounded-full border border-white/10 bg-linear-to-br from-brand-indigo/30 to-brand-blue/30 text-2xl font-semibold text-white">
+                  <div className="mx-auto flex size-24 items-center justify-center rounded-full border border-(--m-border) bg-linear-to-br from-brand-indigo/30 to-brand-blue/30 text-2xl font-semibold text-(--m-strong)">
                     {member.name
                       .split(" ")
                       .slice(0, 2)
@@ -181,7 +181,7 @@ export default async function AboutPage({
                       .toUpperCase()}
                   </div>
                 )}
-                <h3 className="mt-4 font-semibold text-white">
+                <h3 className="mt-4 font-semibold text-(--m-strong)">
                   {member.name}
                 </h3>
                 <p className="mt-1 text-sm marketing-muted">

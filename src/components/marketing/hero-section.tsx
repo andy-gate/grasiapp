@@ -12,7 +12,7 @@ export async function HeroSection() {
   const t = await getTranslations("home");
 
   return (
-    <section className="relative overflow-hidden border-b border-white/5 px-4 pb-24 pt-28 md:pb-32 md:pt-36">
+    <section className="relative overflow-hidden border-b border-(--m-divider) px-4 pb-24 pt-28 md:pb-32 md:pt-36">
       <GridBackground />
       <div className="relative mx-auto max-w-6xl">
         <div className="mx-auto max-w-4xl text-center">
@@ -40,7 +40,7 @@ export async function HeroSection() {
               href="/it"
               className={cn(
                 buttonVariants({ variant: "outline" }),
-                "h-11 border-white/20 bg-white/5 px-8 text-white backdrop-blur hover:bg-white/10 hover:text-white",
+                "h-11 border-(--m-border-strong) bg-(--m-soft) px-8 text-(--m-strong) backdrop-blur hover:bg-(--m-soft-strong) hover:text-(--m-strong)",
               )}
             >
               {t("ctaIt")}

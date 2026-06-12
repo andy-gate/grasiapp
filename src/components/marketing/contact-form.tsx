@@ -18,7 +18,7 @@ export function ContactForm() {
 
   if (state.ok) {
     return (
-      <p className="rounded-lg border border-brand-blue/30 bg-brand-blue/10 p-4 text-brand-blue-light">
+      <p className="rounded-lg border border-brand-blue/30 bg-brand-blue/10 p-4 text-(--m-accent)">
         {t("success")}
       </p>
     );

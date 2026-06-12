@@ -43,11 +43,11 @@ export default async function CharityDetailPage({
   return (
     <div className="mx-auto max-w-5xl px-4 py-12">
       <div className="flex flex-wrap items-center gap-2">
-        <Badge className="border-brand-blue/30 bg-brand-blue/20 text-brand-blue-light">
+        <Badge className="border-brand-blue/30 bg-brand-blue/20 text-(--m-accent)">
           {t("title")}
         </Badge>
         {project.location && (
-          <Badge variant="outline" className="border-white/15 text-slate-400">
+          <Badge variant="outline" className="border-(--m-border-strong) text-(--m-muted)">
             <MapPin className="size-3" />
             {project.location}
           </Badge>
@@ -85,26 +85,26 @@ export default async function CharityDetailPage({
         />
 
         {hasInfoCard && (
-          <aside className="lg:sticky lg:top-24 h-fit rounded-xl border border-white/10 bg-[#0d1117]/60 p-6 backdrop-blur">
+          <aside className="lg:sticky lg:top-24 h-fit rounded-xl border border-(--m-border) bg-(--m-card) p-6 backdrop-blur">
             <div className="space-y-4">
               {project.beneficiary && (
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-brand-blue-light">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-(--m-accent)">
                     {t("beneficiary")}
                   </p>
-                  <p className="mt-1 flex items-center gap-2 text-sm text-white">
-                    <HeartHandshake className="size-4 text-brand-blue-light" />
+                  <p className="mt-1 flex items-center gap-2 text-sm text-(--m-strong)">
+                    <HeartHandshake className="size-4 text-(--m-accent)" />
                     {project.beneficiary}
                   </p>
                 </div>
               )}
               {project.location && (
                 <div>
-                  <p className="text-xs font-semibold uppercase tracking-wider text-brand-blue-light">
+                  <p className="text-xs font-semibold uppercase tracking-wider text-(--m-accent)">
                     {t("location")}
                   </p>
-                  <p className="mt-1 flex items-center gap-2 text-sm text-white">
-                    <MapPin className="size-4 text-brand-blue-light" />
+                  <p className="mt-1 flex items-center gap-2 text-sm text-(--m-strong)">
+                    <MapPin className="size-4 text-(--m-accent)" />
                     {project.location}
                   </p>
                 </div>
@@ -115,8 +115,8 @@ export default async function CharityDetailPage({
       </div>
 
       {otherPrograms.length > 0 && (
-        <section className="mt-16 border-t border-white/10 pt-10">
-          <h2 className="text-xl font-semibold text-white">
+        <section className="mt-16 border-t border-(--m-border) pt-10">
+          <h2 className="text-xl font-semibold text-(--m-strong)">
             {t("otherPrograms")}
           </h2>
           <div className="mt-6 grid gap-4 sm:grid-cols-2">
@@ -124,10 +124,10 @@ export default async function CharityDetailPage({
               <Link
                 key={p.id}
                 href={`/charity/${p.slug}`}
-                className="group flex items-center gap-4 rounded-xl border border-white/10 bg-[#0d1117]/60 p-4 backdrop-blur transition-all hover:border-brand-blue/40"
+                className="group flex items-center gap-4 rounded-xl border border-(--m-border) bg-(--m-card) p-4 backdrop-blur transition-all hover:border-brand-blue/40"
               >
                 {p.screenshotUrl ? (
-                  <div className="h-16 w-24 shrink-0 overflow-hidden rounded-lg border border-white/10 bg-black/20">
+                  <div className="h-16 w-24 shrink-0 overflow-hidden rounded-lg border border-(--m-border) bg-(--m-media-bg)">
                     <Image
                       src={p.screenshotUrl}
                       alt={pickLocaleField(p, "title", loc)}
@@ -137,12 +137,12 @@ export default async function CharityDetailPage({
                     />
                   </div>
                 ) : (
-                  <div className="flex h-16 w-24 shrink-0 items-center justify-center rounded-lg border border-white/10 bg-black/20">
-                    <HeartHandshake className="size-6 text-brand-blue-light" />
+                  <div className="flex h-16 w-24 shrink-0 items-center justify-center rounded-lg border border-(--m-border) bg-(--m-media-bg)">
+                    <HeartHandshake className="size-6 text-(--m-accent)" />
                   </div>
                 )}
                 <div className="min-w-0">
-                  <h3 className="truncate text-sm font-semibold text-white group-hover:text-brand-blue-light">
+                  <h3 className="truncate text-sm font-semibold text-(--m-strong) group-hover:text-(--m-accent)">
                     {pickLocaleField(p, "title", loc)}
                   </h3>
                   <p className="mt-1 line-clamp-2 text-xs marketing-muted">

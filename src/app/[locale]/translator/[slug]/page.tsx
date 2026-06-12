@@ -36,7 +36,7 @@ export default async function TranslatorServiceDetailPage({
         }}
       />
       {pickLocaleField(service, "pricingNote", loc) && (
-        <p className="mt-6 rounded-xl border border-white/10 bg-white/5 p-4 text-sm text-slate-300">
+        <p className="mt-6 rounded-xl border border-(--m-border) bg-(--m-soft) p-4 text-sm text-(--m-soft-text)">
           {pickLocaleField(service, "pricingNote", loc)}
         </p>
       )}

@@ -28,7 +28,7 @@ export function CodeMockup() {
         transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
       />
       <motion.div
-        className="relative overflow-hidden rounded-2xl border border-white/10 bg-[#0d1117]/90 shadow-2xl backdrop-blur-xl"
+        className="relative overflow-hidden rounded-2xl border border-(--m-border) bg-[#0d1117]/90 shadow-2xl backdrop-blur-xl"
         animate={reduce ? undefined : { y: [0, -6, 0] }}
         transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
       >

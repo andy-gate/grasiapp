@@ -22,14 +22,14 @@ export async function ProcessSection() {
         <StaggerGroup className="mt-12 grid gap-4 md:grid-cols-5" stagger={0.1}>
           {STEPS.map((step, i) => (
             <StaggerItem key={step}>
-              <div className="group relative h-full rounded-xl border border-white/10 bg-gradient-to-b from-white/[0.06] to-transparent p-5 backdrop-blur transition-all hover:border-brand-blue/30 hover:shadow-lg hover:shadow-brand-blue/5">
-                <span className="font-mono text-xs text-brand-blue-light">
+              <div className="group relative h-full rounded-xl border border-(--m-border) bg-gradient-to-b from-(--m-soft) to-transparent p-5 backdrop-blur transition-all hover:border-brand-blue/30 hover:shadow-lg hover:shadow-brand-blue/5">
+                <span className="font-mono text-xs text-(--m-accent)">
                   0{i + 1}
                 </span>
-                <h3 className="mt-2 font-semibold text-white">
+                <h3 className="mt-2 font-semibold text-(--m-strong)">
                   {t(`process.${step}.title`)}
                 </h3>
-                <p className="mt-2 text-sm text-slate-400">
+                <p className="mt-2 text-sm text-(--m-muted)">
                   {t(`process.${step}.desc`)}
                 </p>
               </div>

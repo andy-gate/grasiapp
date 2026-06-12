@@ -25,7 +25,7 @@ export async function ClientsSection({ locale }: { locale: Locale }) {
   }));
 
   return (
-    <section className="border-b border-white/5 px-4 py-16">
+    <section className="border-b border-(--m-divider) px-4 py-16">
       <div className="mx-auto max-w-6xl">
         <Reveal>
           <SectionHeading

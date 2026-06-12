@@ -38,7 +38,7 @@ export type CalculatorSpeed = {
 };
 
 const selectClass =
-  "h-11 w-full rounded-md border border-white/15 bg-[#0d1117] px-3 text-sm text-white outline-none transition-colors focus:border-brand-blue/60";
+  "h-11 w-full rounded-md border border-(--m-border-strong) bg-(--m-card-strong) px-3 text-sm text-(--m-strong) outline-none transition-colors focus:border-brand-blue/60";
 
 export function PriceCalculator({
   services,
@@ -116,13 +116,13 @@ export function PriceCalculator({
       : null;
 
   return (
-    <div className="rounded-2xl border border-white/10 bg-[#0d1117]/70 p-6 backdrop-blur md:p-8">
+    <div className="rounded-2xl border border-(--m-border) bg-(--m-card) p-6 backdrop-blur md:p-8">
       <div className="flex items-center gap-3">
         <div className="flex size-11 items-center justify-center rounded-lg bg-brand-blue/15">
-          <Calculator className="size-5 text-brand-blue-light" />
+          <Calculator className="size-5 text-(--m-accent)" />
         </div>
         <div>
-          <h2 className="text-xl font-semibold text-white">
+          <h2 className="text-xl font-semibold text-(--m-strong)">
             {t("calcTitle")}
           </h2>
           <p className="text-sm marketing-muted">{t("calcSubtitle")}</p>
@@ -131,7 +131,7 @@ export function PriceCalculator({
 
       <div className="mt-6 grid gap-4 md:grid-cols-2">
         <div className="space-y-2 md:col-span-2">
-          <Label className="text-slate-300">{t("calcService")}</Label>
+          <Label className="text-(--m-soft-text)">{t("calcService")}</Label>
           <select
             className={selectClass}
             value={service.id}
@@ -150,7 +150,7 @@ export function PriceCalculator({
           </select>
         </div>
         <div className="space-y-2">
-          <Label className="text-slate-300">{t("calcSource")}</Label>
+          <Label className="text-(--m-soft-text)">{t("calcSource")}</Label>
           <select
             className={selectClass}
             value={activeSource ?? ""}
@@ -164,7 +164,7 @@ export function PriceCalculator({
           </select>
         </div>
         <div className="space-y-2">
-          <Label className="text-slate-300">{t("calcTarget")}</Label>
+          <Label className="text-(--m-soft-text)">{t("calcTarget")}</Label>
           <select
             className={selectClass}
             value={activeTarget ?? ""}
@@ -179,7 +179,7 @@ export function PriceCalculator({
         </div>
         {speeds.length > 0 && (
           <div className="space-y-2">
-            <Label className="text-slate-300">{t("calcSpeed")}</Label>
+            <Label className="text-(--m-soft-text)">{t("calcSpeed")}</Label>
             <select
               className={selectClass}
               value={speedIdx}
@@ -195,13 +195,13 @@ export function PriceCalculator({
           </div>
         )}
         <div className="space-y-2">
-          <Label className="text-slate-300">{t("calcPages")}</Label>
+          <Label className="text-(--m-soft-text)">{t("calcPages")}</Label>
           <Input
             type="number"
             min={1}
             value={pages}
             onChange={(e) => setPages(e.target.value)}
-            className="h-11 border-white/15 bg-[#0d1117] text-white"
+            className="h-11 border-(--m-border-strong) bg-(--m-card-strong) text-(--m-strong)"
           />
         </div>
       </div>

@@ -48,8 +48,8 @@ export default async function ItProjectsPage({
           className={cn(
             "rounded-full border px-4 py-1.5 text-sm transition-colors",
             !categorySlug
-              ? "border-brand-blue/50 bg-brand-blue/20 text-brand-blue-light"
-              : "border-white/10 text-slate-400 hover:border-white/20 hover:text-white",
+              ? "border-brand-blue/50 bg-brand-blue/20 text-(--m-accent)"
+              : "border-(--m-border) text-(--m-muted) hover:border-(--m-border-strong) hover:text-(--m-strong)",
           )}
         >
           {tc("all")}
@@ -61,8 +61,8 @@ export default async function ItProjectsPage({
             className={cn(
               "rounded-full border px-4 py-1.5 text-sm transition-colors",
               categorySlug === cat.slug
-                ? "border-brand-blue/50 bg-brand-blue/20 text-brand-blue-light"
-                : "border-white/10 text-slate-400 hover:border-white/20 hover:text-white",
+                ? "border-brand-blue/50 bg-brand-blue/20 text-(--m-accent)"
+                : "border-(--m-border) text-(--m-muted) hover:border-(--m-border-strong) hover:text-(--m-strong)",
             )}
           >
             {pickLocaleField(cat, "name", loc)}
@@ -78,7 +78,7 @@ export default async function ItProjectsPage({
             {projects.map((p) => (
               <MarketingCard key={p.id}>
                 {p.screenshotUrl && (
-                  <div className="mb-4 aspect-video overflow-hidden rounded-lg border border-white/10 bg-black/20">
+                  <div className="mb-4 aspect-video overflow-hidden rounded-lg border border-(--m-border) bg-(--m-media-bg)">
                     <Image
                       src={p.screenshotUrl}
                       alt={pickLocaleField(p, "title", loc)}
@@ -93,13 +93,13 @@ export default async function ItProjectsPage({
                     <Badge
                       key={cat.id}
                       variant="outline"
-                      className="border-brand-blue/30 text-brand-blue-light"
+                      className="border-brand-blue/30 text-(--m-accent)"
                     >
                       {pickLocaleField(cat, "name", loc)}
                     </Badge>
                   ))}
                 </div>
-                <h2 className="mt-3 text-lg font-semibold text-white">
+                <h2 className="mt-3 text-lg font-semibold text-(--m-strong)">
                   <Link href={`/it/${p.slug}`} className="marketing-link">
                     {pickLocaleField(p, "title", loc)}
                   </Link>

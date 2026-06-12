@@ -21,6 +21,7 @@ const PERMISSIONS = [
   { slug: "translator.manage", name: "Kelola layanan translator" },
   { slug: "page.manage", name: "Kelola halaman CMS" },
   { slug: "about.manage", name: "Kelola halaman tentang kami" },
+  { slug: "setting.manage", name: "Kelola pengaturan situs" },
   { slug: "contact.read", name: "Baca pesan kontak" },
   { slug: "bio_page.access", name: "Akses bio page sendiri" },
   { slug: "bio_page.manage", name: "Kelola semua bio page" },
@@ -657,31 +658,30 @@ async function main() {
     });
   }
 
+  const companySetting = {
+    nameId: "Grasia Prima Perfekta",
+    nameEn: "Grasia Prima Perfekta",
+    email: "grasiaprimaperfekta@gmail.com",
+    phone: "081221120660",
+    waNumber: "6281221120660",
+    addressId: "Jakarta, Indonesia",
+    addressEn: "Jakarta, Indonesia",
+    hoursId: "Senin - Jumat, 09.00 - 17.00 WIB",
+    hoursEn: "Monday - Friday, 9 AM - 5 PM (GMT+7)",
+    socials: {
+      facebook: "",
+      instagram: "https://instagram.com/grasiaprimaperfekta",
+      linkedin: "",
+      youtube: "",
+      x: "",
+      tiktok: "",
+    },
+  };
+
   await prisma.siteSetting.upsert({
     where: { key: "company" },
-    update: {
-      value: {
-        nameId: "Grasia Prima Perfekta",
-        nameEn: "Grasia Prima Perfekta",
-        email: "grasiaprimaperfekta@gmail.com",
-        phone: "081221120660",
-        waNumber: "6281221120660",
-        addressId: "Jakarta, Indonesia",
-        addressEn: "Jakarta, Indonesia",
-      },
-    },
-    create: {
-      key: "company",
-      value: {
-        nameId: "Grasia Prima Perfekta",
-        nameEn: "Grasia Prima Perfekta",
-        email: "grasiaprimaperfekta@gmail.com",
-        phone: "081221120660",
-        waNumber: "6281221120660",
-        addressId: "Jakarta, Indonesia",
-        addressEn: "Jakarta, Indonesia",
-      },
-    },
+    update: { value: companySetting },
+    create: { key: "company", value: companySetting },
   });
 
   const aboutSetting = {

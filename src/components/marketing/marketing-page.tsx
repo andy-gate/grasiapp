@@ -11,7 +11,7 @@ export function MarketingPage({
 }) {
   return (
     <div className={cn("mx-auto max-w-6xl px-4 py-12", className)}>
-      <h1 className="text-3xl font-bold text-white md:text-4xl">{title}</h1>
+      <h1 className="text-3xl font-bold text-(--m-strong) md:text-4xl">{title}</h1>
       <div className="mt-8">{children}</div>
     </div>
   );

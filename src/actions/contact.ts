@@ -2,6 +2,7 @@
 
 import { z } from "zod";
 import { prisma } from "@/lib/db";
+import { sendContactNotification } from "@/lib/mailer";
 
 const schema = z.object({
   name: z.string().min(2),
@@ -28,5 +29,6 @@ export async function submitContactForm(
   }
 
   await prisma.contactMessage.create({ data: parsed.data });
+  await sendContactNotification(parsed.data);
   return { ok: true };
 }

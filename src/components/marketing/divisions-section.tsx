@@ -51,23 +51,23 @@ export async function DivisionsSection() {
                   className={`h-full rounded-xl border p-6 transition-all ${
                     item.featured
                       ? "border-brand-blue/40 bg-gradient-to-br from-brand-indigo/20 to-brand-blue/5 shadow-lg shadow-brand-blue/10"
-                      : "border-white/10 bg-white/[0.03] hover:border-white/20"
+                      : "border-(--m-border) bg-(--m-surface) hover:border-(--m-border-strong)"
                   }`}
                 >
                   <div
                     className={`mb-4 flex h-11 w-11 items-center justify-center rounded-lg ${
                       item.featured
-                        ? "bg-brand-blue/20 text-brand-blue-light"
-                        : "bg-white/10 text-slate-400"
+                        ? "bg-brand-blue/20 text-(--m-accent)"
+                        : "bg-(--m-soft-strong) text-(--m-muted)"
                     }`}
                   >
                     <Icon className="h-5 w-5" />
                   </div>
-                  <h3 className="flex items-center justify-between font-semibold text-white">
+                  <h3 className="flex items-center justify-between font-semibold text-(--m-strong)">
                     {item.title}
                     <ArrowRight className="h-4 w-4 opacity-0 transition-opacity group-hover:opacity-100" />
                   </h3>
-                  <p className="mt-2 text-sm text-slate-400">{item.desc}</p>
+                  <p className="mt-2 text-sm text-(--m-muted)">{item.desc}</p>
                 </div>
               </Link>
             </StaggerItem>

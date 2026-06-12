@@ -1,5 +1,14 @@
 import { prisma } from "@/lib/db";
 
+export type CompanySocials = {
+  facebook?: string;
+  instagram?: string;
+  linkedin?: string;
+  youtube?: string;
+  x?: string;
+  tiktok?: string;
+};
+
 export type CompanySettings = {
   nameId?: string;
   nameEn?: string;
@@ -8,6 +17,9 @@ export type CompanySettings = {
   waNumber?: string;
   addressId?: string;
   addressEn?: string;
+  hoursId?: string;
+  hoursEn?: string;
+  socials?: CompanySocials;
 };
 
 export async function getCompanySettings(): Promise<CompanySettings> {

@@ -47,7 +47,7 @@ export function ProjectGallerySlider({
 
   return (
     <div className="space-y-3">
-      <div className="relative aspect-video overflow-hidden rounded-xl border border-white/10 bg-black/20">
+      <div className="relative aspect-video overflow-hidden rounded-xl border border-(--m-border) bg-(--m-media-bg)">
         <button
           type="button"
           onClick={() => setLightboxOpen(true)}
@@ -97,7 +97,7 @@ export function ProjectGallerySlider({
               type="button"
               onClick={() => setIndex(idx)}
               className={cn(
-                "overflow-hidden rounded-md border border-white/10 transition",
+                "overflow-hidden rounded-md border border-(--m-border) transition",
                 idx === index ? "ring-2 ring-brand-blue-light" : "opacity-70 hover:opacity-100",
               )}
               aria-label={`Open screenshot ${idx + 1}`}

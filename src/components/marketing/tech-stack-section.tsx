@@ -17,7 +17,7 @@ export async function TechStackSection({ locale }: { locale: Locale }) {
   if (items.length === 0) return null;
 
   return (
-    <section className="border-b border-white/5 px-4 py-16">
+    <section className="border-b border-(--m-divider) px-4 py-16">
       <div className="mx-auto max-w-6xl">
         <Reveal>
           <SectionHeading
@@ -31,7 +31,7 @@ export async function TechStackSection({ locale }: { locale: Locale }) {
           {items.map((item) => (
             <StaggerItem key={item.id}>
               <span
-                className="inline-block rounded-lg border border-white/10 bg-white/5 px-4 py-2 font-mono text-sm text-slate-300 backdrop-blur transition-colors hover:border-brand-blue/40 hover:text-brand-blue-light"
+                className="inline-block rounded-lg border border-(--m-border) bg-(--m-soft) px-4 py-2 font-mono text-sm text-(--m-soft-text) backdrop-blur transition-colors hover:border-brand-blue/40 hover:text-(--m-accent)"
               >
                 {pickLocaleField(item, "name", locale)}
               </span>
