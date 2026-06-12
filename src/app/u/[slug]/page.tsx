@@ -36,6 +36,12 @@ export default async function BioPublicPage({
     bgStyle.background = bio.backgroundValue;
   }
 
+  if (bio.fontFamily === "serif") {
+    bgStyle.fontFamily = "Georgia, serif";
+  } else if (bio.fontFamily === "mono") {
+    bgStyle.fontFamily = "Courier New, monospace";
+  }
+
   return (
     <div
       className="relative flex min-h-screen flex-col items-center px-4 py-12"
