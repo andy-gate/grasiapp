@@ -60,6 +60,20 @@ npm run dev
 | `npm run db:migrate` | Migrasi database |
 | `npm run db:seed` | Seed data awal |
 
+## Deploy (database)
+
+Urutan yang disarankan:
+
+```bash
+npm run db:generate
+npx prisma migrate deploy
+npm run db:seed
+```
+
+**Catatan:** `migrate deploy` dan `db:seed` memakai `DATABASE_URL` yang sama. Untuk managed PostgreSQL (DigitalOcean, Neon, RDS), SSL otomatis diaktifkan untuk host remote. Jika perlu paksa: `DATABASE_SSL=true`.
+
+Seed membutuhkan `tsx` (devDependency) — jalankan dengan `npm install` penuh, bukan `--omit=dev`, saat step seed di CI/deploy.
+
 ## Routing
 
 | Path | Deskripsi |

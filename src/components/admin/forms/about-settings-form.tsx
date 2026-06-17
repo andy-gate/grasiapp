@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Plus, Trash2 } from "lucide-react";
 import { updateAboutSettings } from "@/actions/admin/about";
 import { AdminForm } from "@/components/admin/admin-form";
-import { BilingualPair, FormField } from "@/components/admin/form-fields";
+import { BilingualPair, FormField, FormTextarea } from "@/components/admin/form-fields";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -29,6 +29,20 @@ export function AboutSettingsForm({ settings }: { settings: AboutSettings }) {
     <AdminForm action={updateAboutSettings} cancelHref="/admin/about">
       <input type="hidden" name="valuesJson" value={JSON.stringify(values)} />
 
+      <div className="grid gap-4 md:grid-cols-2">
+        <FormTextarea
+          label="Pengantar (ID)"
+          name="introId"
+          defaultValue={settings.introId ?? ""}
+          rows={3}
+        />
+        <FormTextarea
+          label="Pengantar (EN)"
+          name="introEn"
+          defaultValue={settings.introEn ?? ""}
+          rows={3}
+        />
+      </div>
       <FormField
         label="Tahun berdiri"
         name="foundedYear"

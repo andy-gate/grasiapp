@@ -8,6 +8,8 @@ export type AboutValue = {
 };
 
 export type AboutSettings = {
+  introId?: string;
+  introEn?: string;
   visionId?: string;
   visionEn?: string;
   missionId?: string;

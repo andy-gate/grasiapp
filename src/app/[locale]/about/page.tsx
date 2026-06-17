@@ -1,8 +1,7 @@
-import { notFound } from "next/navigation";
 import { getTranslations, setRequestLocale } from "next-intl/server";
 import Image from "next/image";
 import { prisma } from "@/lib/db";
-import { publishedWhere, pickLocaleField } from "@/lib/content";
+import { publishedWhere } from "@/lib/content";
 import { getAboutSettings } from "@/lib/about";
 import type { Locale } from "@/i18n/routing";
 import {
@@ -22,9 +21,8 @@ export default async function AboutPage({
   const loc = locale as Locale;
   const t = await getTranslations("about");
 
-  const [page, settings, team, projectCount, clientCount, charityCount] =
+  const [settings, team, projectCount, clientCount, charityCount] =
     await Promise.all([
-      prisma.page.findFirst({ where: { slug: "about", ...publishedWhere() } }),
       getAboutSettings(),
       prisma.teamMember.findMany({
         where: { isActive: true },
@@ -34,7 +32,6 @@ export default async function AboutPage({
       prisma.client.count({ where: { isActive: true } }),
       prisma.charityProject.count({ where: publishedWhere() }),
     ]);
-  if (!page) notFound();
 
   const tr = (id?: string, en?: string) => (loc === "id" ? id : en) ?? "";
   const yearsOfExperience = settings.foundedYear
@@ -49,6 +46,7 @@ export default async function AboutPage({
     { value: String(charityCount), label: t("statsCharity") },
   ].filter((stat) => stat !== null);
   const values = settings.values ?? [];
+  const intro = tr(settings.introId, settings.introEn);
   const vision = tr(settings.visionId, settings.visionEn);
   const mission = tr(settings.missionId, settings.missionEn);
 
@@ -56,15 +54,13 @@ export default async function AboutPage({
     <div className="mx-auto max-w-6xl px-4 py-12">
       {/* Intro */}
       <Reveal className="mx-auto max-w-3xl text-center">
-        <h1 className="marketing-page-title">
-          {pickLocaleField(page, "title", loc)}
-        </h1>
-        <div
-          className="prose prose-invert mx-auto mt-6 max-w-none text-left"
-          dangerouslySetInnerHTML={{
-            __html: pickLocaleField(page, "body", loc),
-          }}
-        />
+        <h1 className="marketing-page-title">{t("pageTitle")}</h1>
+        {intro && (
+          <div
+            className="prose prose-invert mx-auto mt-6 max-w-none text-left"
+            dangerouslySetInnerHTML={{ __html: intro }}
+          />
+        )}
       </Reveal>
 
       {/* Statistik */}

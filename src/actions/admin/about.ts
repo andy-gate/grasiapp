@@ -15,6 +15,8 @@ const valueSchema = z.object({
 });
 
 const schema = z.object({
+  introId: z.string().optional(),
+  introEn: z.string().optional(),
   visionId: z.string().optional(),
   visionEn: z.string().optional(),
   missionId: z.string().optional(),
@@ -44,6 +46,8 @@ export async function updateAboutSettings(
   await requirePermission("about.manage");
   try {
     const value = schema.parse({
+      introId: String(formData.get("introId") ?? "").trim() || undefined,
+      introEn: String(formData.get("introEn") ?? "").trim() || undefined,
       visionId: String(formData.get("visionId") ?? "").trim() || undefined,
       visionEn: String(formData.get("visionEn") ?? "").trim() || undefined,
       missionId: String(formData.get("missionId") ?? "").trim() || undefined,
