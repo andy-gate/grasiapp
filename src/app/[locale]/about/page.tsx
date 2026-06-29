@@ -10,6 +10,24 @@ import {
   StaggerItem,
 } from "@/components/marketing/motion/reveal";
 import { Eye, Target, Sparkles } from "lucide-react";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "seo.about" });
+  return {
+    title: t("title"),
+    description: t("description"),
+    openGraph: {
+      title: t("title"),
+      description: t("description"),
+    },
+  };
+}
 
 export default async function AboutPage({
   params,

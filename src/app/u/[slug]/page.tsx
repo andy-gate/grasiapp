@@ -1,9 +1,42 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { prisma } from "@/lib/db";
 import { BackgroundType } from "@/generated/prisma/client";
 import Image from "next/image";
 
 export const dynamic = "force-dynamic";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}): Promise<Metadata> {
+  const { slug } = await params;
+  const bio = await prisma.bioPage.findFirst({
+    where: { slug, status: "PUBLISHED" },
+    include: { avatarMedia: true },
+  });
+
+  if (!bio) {
+    return {
+      title: "Not Found",
+    };
+  }
+
+  const title = bio.seoTitle ? { absolute: bio.seoTitle } : `${bio.displayName} | GrasiApp`;
+  const description = bio.seoDescription || bio.bio || undefined;
+  const image = bio.avatarMedia?.url ? bio.avatarMedia.url : undefined;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title: bio.seoTitle || `${bio.displayName} | GrasiApp`,
+      description,
+      images: image ? [{ url: image }] : undefined,
+    },
+  };
+}
 
 export default async function BioPublicPage({
   params,

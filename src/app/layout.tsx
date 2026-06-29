@@ -15,6 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://grasiapp.com"),
   title: {
     default: BRAND.name,
     template: `%s | ${BRAND.name}`,

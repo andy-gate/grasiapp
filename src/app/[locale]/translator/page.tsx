@@ -6,6 +6,36 @@ import { getCompanySettings, getWhatsAppLink } from "@/lib/company";
 import type { Locale } from "@/i18n/routing";
 import { MarketingCard } from "@/components/marketing/marketing-card";
 import { PriceCalculator } from "@/components/marketing/price-calculator";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const overview = await prisma.page.findFirst({
+    where: { slug: "translator-overview", ...publishedWhere() },
+  });
+
+  const loc = locale as Locale;
+  const dbTitle = overview ? (loc === "id" ? overview.seoTitleId : overview.seoTitleEn) : null;
+  const dbDesc = overview ? (loc === "id" ? overview.seoDescId : overview.seoDescEn) : null;
+
+  const t = await getTranslations({ locale, namespace: "seo.translator" });
+
+  const title = dbTitle || t("title");
+  const description = dbDesc || t("description");
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+    },
+  };
+}
 
 export default async function TranslatorPage({
   params,

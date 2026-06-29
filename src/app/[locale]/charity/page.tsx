@@ -6,6 +6,24 @@ import { publishedWhere, pickLocaleField } from "@/lib/content";
 import type { Locale } from "@/i18n/routing";
 import { Badge } from "@/components/ui/badge";
 import { MapPin, HeartHandshake } from "lucide-react";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "seo.charity" });
+  return {
+    title: t("title"),
+    description: t("description"),
+    openGraph: {
+      title: t("title"),
+      description: t("description"),
+    },
+  };
+}
 
 export default async function CharityPage({
   params,

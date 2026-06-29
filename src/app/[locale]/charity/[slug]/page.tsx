@@ -9,6 +9,37 @@ import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { HeartHandshake, MapPin } from "lucide-react";
 import { CharityGallery } from "@/components/marketing/charity-gallery";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const loc = locale as Locale;
+  const project = await prisma.charityProject.findFirst({
+    where: { slug, ...publishedWhere() },
+  });
+
+  if (!project) {
+    return { title: "Not Found" };
+  }
+
+  const title = pickLocaleField(project, "title", loc);
+  const description = pickLocaleField(project, "summary", loc) || undefined;
+  const image = project.screenshotUrl || undefined;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: image ? [{ url: image }] : undefined,
+    },
+  };
+}
 
 export default async function CharityDetailPage({
   params,

@@ -133,5 +133,31 @@
     "calcDisclaimer": "Initial estimate — the final price may vary based on document complexity.",
     "calcOrder": "Order via WhatsApp",
     "calcWaMessage": "Hello, I would like to order the {service} service ({pair}), {pages} pages, {speed} turnaround. Estimated price: {price}."
+  },
+  "seo": {
+    "home": {
+      "title": "Grasia Prima Perfekta — Software Development Studio & Digital Solutions",
+      "description": "Your trusted partner for custom software development, web & mobile applications, charity programs, and professional translation services from concept to production."
+    },
+    "about": {
+      "title": "About Us — Our Team & Values",
+      "description": "Get to know the vision, mission, core values, and expert team behind Grasia Prima Perfekta's software development."
+    },
+    "it": {
+      "title": "Software & App Project Portfolio",
+      "description": "Explore our portfolio of high-quality custom software, web, and mobile applications we have developed for our clients."
+    },
+    "charity": {
+      "title": "Charity & Social Programs",
+      "description": "View the social programs, humanitarian aid, and charity campaigns supported by Grasia Prima Perfekta to make a difference."
+    },
+    "translator": {
+      "title": "Professional Translation & Translator Services",
+      "description": "Fast and accurate official, business, and academic translation services by our trusted professional translation team."
+    },
+    "contact": {
+      "title": "Contact Us — Consult Your Project Needs",
+      "description": "Get in touch with Grasia Prima Perfekta via email, WhatsApp, or contact form to discuss your project needs."
+    }
   }
 }

@@ -3,6 +3,35 @@ import { setRequestLocale } from "next-intl/server";
 import { prisma } from "@/lib/db";
 import { publishedWhere, pickLocaleField } from "@/lib/content";
 import type { Locale } from "@/i18n/routing";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const loc = locale as Locale;
+  const service = await prisma.translatorService.findFirst({
+    where: { slug, ...publishedWhere() },
+  });
+
+  if (!service) {
+    return { title: "Not Found" };
+  }
+
+  const title = pickLocaleField(service, "name", loc);
+  const description = pickLocaleField(service, "description", loc) || undefined;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+    },
+  };
+}
 
 export default async function TranslatorServiceDetailPage({
   params,

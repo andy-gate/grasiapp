@@ -1,4 +1,4 @@
-import { setRequestLocale } from "next-intl/server";
+import { getTranslations, setRequestLocale } from "next-intl/server";
 import { HeroSection } from "@/components/marketing/hero-section";
 import { TechStackSection } from "@/components/marketing/tech-stack-section";
 import { ClientsSection } from "@/components/marketing/clients-section";
@@ -7,6 +7,24 @@ import { FeaturedSection } from "@/components/marketing/featured-section";
 import { DivisionsSection } from "@/components/marketing/divisions-section";
 import { CtaSection } from "@/components/marketing/cta-section";
 import type { Locale } from "@/i18n/routing";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "seo.home" });
+  return {
+    title: t("title"),
+    description: t("description"),
+    openGraph: {
+      title: t("title"),
+      description: t("description"),
+    },
+  };
+}
 
 export default async function HomePage({
   params,

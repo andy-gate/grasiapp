@@ -7,6 +7,24 @@ import type { Locale } from "@/i18n/routing";
 import { Badge } from "@/components/ui/badge";
 import { MarketingCard } from "@/components/marketing/marketing-card";
 import { cn } from "@/lib/utils";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "seo.it" });
+  return {
+    title: t("title"),
+    description: t("description"),
+    openGraph: {
+      title: t("title"),
+      description: t("description"),
+    },
+  };
+}
 
 export default async function ItProjectsPage({
   params,

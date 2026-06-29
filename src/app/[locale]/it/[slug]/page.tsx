@@ -11,6 +11,37 @@ import { cn, ensureAbsoluteUrl } from "@/lib/utils";
 import { Globe } from "lucide-react";
 import { ProjectGallerySlider } from "@/components/marketing/project-gallery-slider";
 import { MarketingCard } from "@/components/marketing/marketing-card";
+import type { Metadata } from "next";
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>;
+}): Promise<Metadata> {
+  const { locale, slug } = await params;
+  const loc = locale as Locale;
+  const project = await prisma.itProject.findFirst({
+    where: { slug, ...publishedWhere() },
+  });
+
+  if (!project) {
+    return { title: "Not Found" };
+  }
+
+  const title = pickLocaleField(project, "title", loc);
+  const description = pickLocaleField(project, "summary", loc) || undefined;
+  const image = project.screenshotUrl || undefined;
+
+  return {
+    title,
+    description,
+    openGraph: {
+      title,
+      description,
+      images: image ? [{ url: image }] : undefined,
+    },
+  };
+}
 
 export default async function ItProjectDetailPage({
   params,

@@ -133,5 +133,31 @@
     "calcDisclaimer": "Estimasi awal — harga final dapat menyesuaikan kompleksitas dokumen.",
     "calcOrder": "Pesan via WhatsApp",
     "calcWaMessage": "Halo, saya ingin memesan layanan {service} ({pair}), {pages} halaman, waktu pengerjaan {speed}. Estimasi harga: {price}."
+  },
+  "seo": {
+    "home": {
+      "title": "Grasia Prima Perfekta — Software Development Studio & Solusi Digital",
+      "description": "Partner tepercaya untuk pengembangan custom software, aplikasi web & mobile, program sosial charity, serta layanan translator profesional dari ide hingga production."
+    },
+    "about": {
+      "title": "Tentang Kami — Tim & Nilai Kami",
+      "description": "Mengenal visi, misi, nilai-nilai utama, dan tim ahli di balik pengembangan software serta solusi digital Grasia Prima Perfekta."
+    },
+    "it": {
+      "title": "Portfolio Proyek Software & Aplikasi",
+      "description": "Jelajahi portfolio produk software, sistem integrasi, aplikasi web, dan mobile unggulan yang telah kami kembangkan untuk klien."
+    },
+    "charity": {
+      "title": "Program Charity & Sosial",
+      "description": "Lihat berbagai program sosial, bantuan kemanusiaan, dan aksi charity yang didukung oleh Grasia Prima Perfekta untuk membantu sesama."
+    },
+    "translator": {
+      "title": "Layanan Penerjemah & Translator Profesional",
+      "description": "Penerjemahan dokumen resmi, bisnis, akademik yang cepat dan akurat oleh tim translator profesional terpercaya."
+    },
+    "contact": {
+      "title": "Hubungi Kami — Konsultasi Solusi Digital Anda",
+      "description": "Hubungi tim Grasia Prima Perfekta via email, WhatsApp, atau formulir kontak untuk mendiskusikan kebutuhan proyek Anda."
+    }
   }
 }
