@@ -10,8 +10,9 @@ import { prisma } from "@/lib/db";
 import { requirePermission } from "@/lib/admin-auth";
 import { fail, type ActionResult } from "@/lib/action-result";
 import { BackgroundType, PublishStatus } from "@/generated/prisma/client";
+import { getUploadDir } from "@/lib/server-utils";
 
-const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads", "bio");
+const UPLOAD_DIR = getUploadDir("bio");
 const ALLOWED_IMAGE_TYPES = new Map([
   ["image/png", "png"],
   ["image/jpeg", "jpg"],

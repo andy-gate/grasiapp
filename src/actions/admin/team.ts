@@ -9,6 +9,7 @@ import { z } from "zod";
 import { prisma } from "@/lib/db";
 import { requirePermission } from "@/lib/admin-auth";
 import { fail, type ActionResult } from "@/lib/action-result";
+import { getUploadDir } from "@/lib/server-utils";
 
 const schema = z.object({
   name: z.string().min(1),
@@ -19,7 +20,7 @@ const schema = z.object({
   isActive: z.enum(["true", "false"]).transform((v) => v === "true"),
 });
 
-const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads", "team");
+const UPLOAD_DIR = getUploadDir("team");
 const ALLOWED_PHOTO_TYPES = new Map([
   ["image/png", "png"],
   ["image/jpeg", "jpg"],

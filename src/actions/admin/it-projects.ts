@@ -11,6 +11,7 @@ import { requirePermission } from "@/lib/admin-auth";
 import { slugify } from "@/lib/slug";
 import { fail, type ActionResult } from "@/lib/action-result";
 import { PublishStatus } from "@/generated/prisma/client";
+import { getUploadDir } from "@/lib/server-utils";
 
 const schema = z.object({
   slug: z.string().min(1),
@@ -34,7 +35,7 @@ const schema = z.object({
   sortOrder: z.coerce.number().int().default(0),
 });
 
-const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads", "it-projects");
+const UPLOAD_DIR = getUploadDir("it-projects");
 const ALLOWED_SCREENSHOT_TYPES = new Map([
   ["image/png", "png"],
   ["image/jpeg", "jpg"],

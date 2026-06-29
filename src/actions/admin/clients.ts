@@ -10,6 +10,7 @@ import { prisma } from "@/lib/db";
 import { requirePermission } from "@/lib/admin-auth";
 import { slugify } from "@/lib/slug";
 import { fail, type ActionResult } from "@/lib/action-result";
+import { getUploadDir } from "@/lib/server-utils";
 
 const schema = z.object({
   slug: z.string().min(1),
@@ -21,7 +22,7 @@ const schema = z.object({
   isActive: z.enum(["true", "false"]).transform((v) => v === "true"),
 });
 
-const UPLOAD_DIR = path.join(process.cwd(), "public", "uploads", "clients");
+const UPLOAD_DIR = getUploadDir("clients");
 const ALLOWED_LOGO_TYPES = new Map([
   ["image/png", "png"],
   ["image/jpeg", "jpg"],

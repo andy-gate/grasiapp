@@ -7,7 +7,7 @@ import { publishedWhere, pickLocaleField } from "@/lib/content";
 import type { Locale } from "@/i18n/routing";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import { cn, ensureAbsoluteUrl } from "@/lib/utils";
 import { Globe } from "lucide-react";
 import { ProjectGallerySlider } from "@/components/marketing/project-gallery-slider";
 import { MarketingCard } from "@/components/marketing/marketing-card";
@@ -43,7 +43,7 @@ export default async function ItProjectDetailPage({
 
   const storeBadges = [
     {
-      href: project.appStoreUrl,
+      href: project.appStoreUrl ? ensureAbsoluteUrl(project.appStoreUrl) : null,
       label: t("appStore"),
       src: "/badges/app-store-badge.svg",
       width: 120,
@@ -51,7 +51,7 @@ export default async function ItProjectDetailPage({
       className: "h-12 w-auto",
     },
     {
-      href: project.playStoreUrl,
+      href: project.playStoreUrl ? ensureAbsoluteUrl(project.playStoreUrl) : null,
       label: t("playStore"),
       src: "/badges/google-play-badge.png",
       width: 646,
@@ -117,7 +117,7 @@ export default async function ItProjectDetailPage({
         <div className="mt-8 flex flex-wrap items-center gap-3">
           {project.websiteUrl && (
             <a
-              href={project.websiteUrl}
+              href={ensureAbsoluteUrl(project.websiteUrl)}
               target="_blank"
               rel="noopener noreferrer"
               className={cn(

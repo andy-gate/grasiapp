@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
+import { ensureAbsoluteUrl } from "@/lib/utils";
 
 export type MarqueeClient = {
   id: string;
@@ -56,7 +57,7 @@ function ClientCard({
   if (client.websiteUrl) {
     return (
       <a
-        href={client.websiteUrl}
+        href={ensureAbsoluteUrl(client.websiteUrl)}
         target="_blank"
         rel="noopener noreferrer"
         className={className}
