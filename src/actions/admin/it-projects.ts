@@ -170,6 +170,9 @@ export async function updateItProject(
       clientId,
       ...data
     } = parsed;
+    if (uploadedScreenshots.length === 0) {
+      delete (data as any).galleryUrls;
+    }
     await prisma.itProject.update({
       where: { id },
       data: {
