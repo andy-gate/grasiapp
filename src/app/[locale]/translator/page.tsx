@@ -90,7 +90,7 @@ export default async function TranslatorPage({
       <h1 className="marketing-page-title">{t("title")}</h1>
       {overview && (
         <div
-          className="prose prose-invert mt-4 max-w-none"
+          className="prose prose-invert mt-4 max-w-none whitespace-pre-wrap"
           dangerouslySetInnerHTML={{
             __html: pickLocaleField(overview, "body", loc),
           }}

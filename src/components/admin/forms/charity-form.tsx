@@ -43,7 +43,7 @@ export function CharityForm({ project }: { project?: CharityProject }) {
         values={{ id: project?.bodyId ?? "", en: project?.bodyEn ?? "" }}
         multiline
       />
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-4 md:grid-cols-3">
         <FormField
           label="Penerima manfaat"
           name="beneficiary"
@@ -53,6 +53,12 @@ export function CharityForm({ project }: { project?: CharityProject }) {
           label="Lokasi"
           name="location"
           defaultValue={project?.location ?? ""}
+        />
+        <FormField
+          label="Tanggal Pelaksanaan"
+          name="eventDate"
+          type="date"
+          defaultValue={project?.eventDate ?? ""}
         />
       </div>
       <FormField

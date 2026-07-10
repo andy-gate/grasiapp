@@ -141,7 +141,7 @@ export default async function ItProjectDetailPage({
         </div>
       )}
       <div
-        className="prose prose-invert mt-8 max-w-none"
+        className="prose prose-invert mt-8 max-w-none whitespace-pre-wrap"
         dangerouslySetInnerHTML={{ __html: body }}
       />
       {(project.websiteUrl || storeBadges.length > 0) && (

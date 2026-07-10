@@ -155,7 +155,7 @@ export function ItProjectForm({
       <FormField
         label="Tahun"
         name="year"
-        type="number"
+        type="text"
         defaultValue={project?.year ?? ""}
       />
       <div className="grid gap-4 md:grid-cols-3">

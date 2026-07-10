@@ -117,7 +117,8 @@
     "empty": "No programs yet.",
     "beneficiary": "Beneficiary",
     "location": "Location",
-    "otherPrograms": "Other Programs"
+    "otherPrograms": "Other Programs",
+    "eventDate": "Execution Date"
   },
   "translator": {
     "title": "Translation Services",

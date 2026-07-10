@@ -7,8 +7,8 @@ import { publishedWhere, pickLocaleField } from "@/lib/content";
 import type { Locale } from "@/i18n/routing";
 import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { HeartHandshake, MapPin } from "lucide-react";
-import { CharityGallery } from "@/components/marketing/charity-gallery";
+import { HeartHandshake, MapPin, Calendar } from "lucide-react";
+import { ProjectGallerySlider } from "@/components/marketing/project-gallery-slider";
 import type { Metadata } from "next";
 
 export async function generateMetadata({
@@ -69,7 +69,13 @@ export default async function CharityDetailPage({
         ? [project.screenshotUrl]
         : [];
 
-  const hasInfoCard = !!project.beneficiary || !!project.location;
+  const hasInfoCard = !!project.beneficiary || !!project.location || !!project.eventDate;
+  const displayDate = project.eventDate
+    ? (() => {
+        const match = project.eventDate.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+        return match ? `${match[3]}/${match[2]}/${match[1]}` : project.eventDate;
+      })()
+    : null;
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-12">
@@ -81,6 +87,12 @@ export default async function CharityDetailPage({
           <Badge variant="outline" className="border-(--m-border-strong) text-(--m-muted)">
             <MapPin className="size-3" />
             {project.location}
+          </Badge>
+        )}
+        {displayDate && (
+          <Badge variant="outline" className="border-(--m-border-strong) text-(--m-muted)">
+            <Calendar className="size-3" />
+            {displayDate}
           </Badge>
         )}
       </div>
@@ -95,7 +107,7 @@ export default async function CharityDetailPage({
 
       {galleryImages.length > 0 && (
         <div className="mt-8">
-          <CharityGallery
+          <ProjectGallerySlider
             images={galleryImages}
             altBase={pickLocaleField(project, "title", loc)}
           />
@@ -109,7 +121,7 @@ export default async function CharityDetailPage({
         )}
       >
         <article
-          className="prose prose-invert max-w-none"
+          className="prose prose-invert max-w-none whitespace-pre-wrap"
           dangerouslySetInnerHTML={{
             __html: pickLocaleField(project, "body", loc),
           }}
@@ -118,6 +130,17 @@ export default async function CharityDetailPage({
         {hasInfoCard && (
           <aside className="lg:sticky lg:top-24 h-fit rounded-xl border border-(--m-border) bg-(--m-card) p-6 backdrop-blur">
             <div className="space-y-4">
+              {displayDate && (
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-wider text-(--m-accent)">
+                    {t("eventDate")}
+                  </p>
+                  <p className="mt-1 flex items-center gap-2 text-sm text-(--m-strong)">
+                    <Calendar className="size-4 text-(--m-accent)" />
+                    {displayDate}
+                  </p>
+                </div>
+              )}
               {project.beneficiary && (
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-wider text-(--m-accent)">

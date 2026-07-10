@@ -59,7 +59,7 @@ export default async function TranslatorServiceDetailPage({
         {service.sourceLanguages.join(", ")} → {service.targetLanguages.join(", ")}
       </p>
       <div
-        className="prose prose-invert mt-8 max-w-none"
+        className="prose prose-invert mt-8 max-w-none whitespace-pre-wrap"
         dangerouslySetInnerHTML={{
           __html: pickLocaleField(service, "description", loc),
         }}

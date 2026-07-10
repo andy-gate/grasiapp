@@ -90,14 +90,14 @@ export function ProjectGallerySlider({
       </div>
 
       {normalized.length > 1 && (
-        <div className="flex flex-wrap gap-2">
+        <div className="flex gap-2 overflow-x-auto pb-1 no-scrollbar scroll-smooth snap-x snap-mandatory">
           {normalized.map((image, idx) => (
             <button
               key={`${image}-${idx}`}
               type="button"
               onClick={() => setIndex(idx)}
               className={cn(
-                "overflow-hidden rounded-md border border-(--m-border) transition",
+                "shrink-0 snap-start overflow-hidden rounded-md border border-(--m-border) transition",
                 idx === index ? "ring-2 ring-brand-blue-light" : "opacity-70 hover:opacity-100",
               )}
               aria-label={`Open screenshot ${idx + 1}`}

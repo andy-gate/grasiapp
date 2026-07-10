@@ -198,7 +198,7 @@ model ItProject {
   playStoreUrl  String?
   screenshotUrl String?
   galleryUrls   String[]        @default([])
-  year          Int?
+  year          String?
   categories    ItCategory[]
   status        PublishStatus   @default(DRAFT)
   featured      Boolean         @default(false)
@@ -231,6 +231,7 @@ model CharityProject {
   donationUrl   String?
   goalAmount    Decimal?      @db.Decimal(12, 2)
   raisedAmount  Decimal?      @db.Decimal(12, 2)
+  eventDate     String?
   periodStart   DateTime?
   periodEnd     DateTime?
   status        PublishStatus @default(DRAFT)

@@ -75,7 +75,7 @@ export default async function AboutPage({
         <h1 className="marketing-page-title">{t("pageTitle")}</h1>
         {intro && (
           <div
-            className="prose prose-invert mx-auto mt-6 max-w-none text-left"
+            className="prose prose-invert mx-auto mt-6 max-w-none text-left whitespace-pre-wrap"
             dangerouslySetInnerHTML={{ __html: intro }}
           />
         )}

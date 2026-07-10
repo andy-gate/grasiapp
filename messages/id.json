@@ -117,7 +117,8 @@
     "empty": "Belum ada program.",
     "beneficiary": "Penerima Manfaat",
     "location": "Lokasi",
-    "otherPrograms": "Program Lainnya"
+    "otherPrograms": "Program Lainnya",
+    "eventDate": "Tanggal Pelaksanaan"
   },
   "translator": {
     "title": "Layanan Translator",
