@@ -39,7 +39,7 @@ export function SectionHeading({
       </div>
       <Tag
         className={cn(
-          "text-3xl font-semibold tracking-tight md:text-4xl lg:text-5xl",
+          "text-3xl font-semibold tracking-tight md:text-4xl lg:text-5xl py-1",
           gradient
             ? "bg-gradient-to-r from-(--m-strong) via-brand-blue-light to-brand-violet bg-clip-text text-transparent"
             : "text-(--m-strong)",

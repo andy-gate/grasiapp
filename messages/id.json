@@ -159,5 +159,13 @@
       "title": "Hubungi Kami — Konsultasi Solusi Digital Anda",
       "description": "Hubungi tim Grasia Prima Perfekta via email, WhatsApp, atau formulir kontak untuk mendiskusikan kebutuhan proyek Anda."
     }
+  },
+  "footer": {
+    "desc": "Software development & digital solutions. Kami menghadirkan solusi teknologi mutakhir untuk bisnis dan organisasi Anda.",
+    "nav": "Navigasi",
+    "contact": "Kontak",
+    "rights": "© {year} Grasia Prima Perfekta. Hak cipta dilindungi undang-undang.",
+    "privacy": "Kebijakan Privasi",
+    "terms": "Ketentuan Layanan"
   }
 }

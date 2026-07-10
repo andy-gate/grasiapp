@@ -159,5 +159,13 @@
       "title": "Contact Us — Consult Your Project Needs",
       "description": "Get in touch with Grasia Prima Perfekta via email, WhatsApp, or contact form to discuss your project needs."
     }
+  },
+  "footer": {
+    "desc": "Software development & digital solutions. We deliver cutting-edge technology solutions for your business and organization.",
+    "nav": "Navigation",
+    "contact": "Contact",
+    "rights": "© {year} Grasia Prima Perfekta. All rights reserved.",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service"
   }
 }
